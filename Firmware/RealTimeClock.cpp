@@ -61,21 +61,17 @@ void RealTimeClock_t::init()
     // Enable 1Hz square wave.
     if (!DS3231.write(DS3231.REG_CONTROL, 0b00011000))
     {
-        Serial.println("Error: Unable to retrieve temperature!");
+        Serial.println("Error: Unable to write configuration!");
         return;
     }
 
-    char buf[19];
-    if (!DS3231.read(0, buf, 19))
+    // Reset time to 'uninitialized'
+    RealTimeTimestamp uninitialized_time;
+    uninitialized_time.setUninitialized();
+    if (!DS3231.write(DS3231.REG_TIME, uninitialized_time.data, RealTimeTimestamp::DATA_LENGTH))
     {
-        Serial.println("Unable to read memory!");
+        Serial.println("Error: Unable to initialize time!");
         return;
-    }
-    for (int i = 0; i < 19; i++)
-    {
-        Serial.print(i);
-        Serial.print(": ");
-        Serial.println(uint8_t(buf[i]));
     }
 }
 
@@ -95,7 +91,6 @@ void RealTimeClock_t::getInfo()
 
 bool RealTimeClock_t::getTime(RealTimeTimestamp &t)
 {
-    RealTimeTimestamp t;
     if (!DS3231.read(DS3231.REG_TIME, t.data, RealTimeTimestamp::DATA_LENGTH))
     {
         Serial.println("Error: Unable to retrieve time!");
@@ -105,20 +100,3 @@ bool RealTimeClock_t::getTime(RealTimeTimestamp &t)
 }
 
 RealTimeClock_t RealTimeClock;
-
-void RealTimeTimestamp::print()
-{
-    Serial.print(getYear());
-    Serial.print("-");
-    Serial.print(getMonth());
-    Serial.print("-");
-    Serial.print(getDay());
-    Serial.print(" (");
-    Serial.print(getDayOfWeek());
-    Serial.print(") ");
-    Serial.print(getHours());
-    Serial.print(":");
-    Serial.print(getMinutes());
-    Serial.print(":");
-    Serial.println(getSeconds());
-}
