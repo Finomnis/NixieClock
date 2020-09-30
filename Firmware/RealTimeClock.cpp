@@ -8,6 +8,7 @@ static constexpr struct
     uint8_t CLIENT_ADDR = 0x68;
 
     // Device register addresses
+    uint8_t REG_TIME = 0x00;
     uint8_t REG_CONTROL = 0x0e;
     uint8_t REG_TEMP = 0x11;
 
@@ -92,4 +93,32 @@ void RealTimeClock_t::getInfo()
     Serial.println(25 * (uint8_t(buf[1]) >> 6));
 }
 
+bool RealTimeClock_t::getTime(RealTimeTimestamp &t)
+{
+    RealTimeTimestamp t;
+    if (!DS3231.read(DS3231.REG_TIME, t.data, RealTimeTimestamp::DATA_LENGTH))
+    {
+        Serial.println("Error: Unable to retrieve time!");
+        return false;
+    }
+    return true;
+}
+
 RealTimeClock_t RealTimeClock;
+
+void RealTimeTimestamp::print()
+{
+    Serial.print(getYear());
+    Serial.print("-");
+    Serial.print(getMonth());
+    Serial.print("-");
+    Serial.print(getDay());
+    Serial.print(" (");
+    Serial.print(getDayOfWeek());
+    Serial.print(") ");
+    Serial.print(getHours());
+    Serial.print(":");
+    Serial.print(getMinutes());
+    Serial.print(":");
+    Serial.println(getSeconds());
+}

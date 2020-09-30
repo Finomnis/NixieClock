@@ -16,4 +16,7 @@ void loop()
     //Serial.println(i);
     i++;
     RealTimeClock.getInfo();
+    RealTimeTimestamp t;
+    RealTimeClock.getTime(t);
+    t.print();
 }
