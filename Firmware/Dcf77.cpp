@@ -4,6 +4,7 @@
 
 namespace
 {
+
     constexpr struct
     {
         const unsigned long FILTER_TIME_MS = 20;
@@ -93,9 +94,11 @@ void Dcf77_t::init()
 
 void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long duration)
 {
-    static int signalCounter = 0;
+    static DcfTimeData data;
+    static int writePosition = 0;
+    static bool foundError = false;
 
-    if (false)
+    /*if (false)
     {
 
         unsigned long lag = millis() - startTime;
@@ -115,48 +118,182 @@ void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long
         Serial.println();
     }
     else
+    {*/
+
+    // Sanity checks
+    if ((positive && (duration > DCFSettings.SIGNAL_ON_MAX_TIME || duration < DCFSettings.SIGNAL_ON_MIN_TIME)) ||
+        (!positive && (duration > DCFSettings.SIGNAL_OFF_MAX_TIME || duration < DCFSettings.SIGNAL_OFF_MIN_TIME)))
     {
+        Serial.println("Invalid signal!");
+        data.valid = false;
+        return;
+    }
 
-        // Sanity checks
-        if ((positive && (duration > DCFSettings.SIGNAL_ON_MAX_TIME || duration < DCFSettings.SIGNAL_ON_MIN_TIME)) ||
-            (!positive && (duration > DCFSettings.SIGNAL_OFF_MAX_TIME || duration < DCFSettings.SIGNAL_OFF_MIN_TIME)))
+    // Catch potential end-of-message signal
+    if (!positive)
+    {
+        // If we catch end-of-message signal
+        if (duration > DCFSettings.SIGNAL_END_OF_MESSAGE_THRESHOLD_MS)
         {
-            Serial.println("Invalid!");
-            signalCounter = 0;
-            // TODO error handling
-            return;
-        }
-
-        // Catch potential end-of-message signal
-        if (!positive)
-        {
-            if (duration > DCFSettings.SIGNAL_END_OF_MESSAGE_THRESHOLD_MS)
+            if (data.valid)
             {
-                signalCounter = 0;
+                // Sync point is at the end of the long pause
+                // we are currently in
+                data.systemTime = startTime + duration;
+                // TODO do something cool
+                Serial.print("  ");
+                data.print();
+            }
+            else
+            {
                 Serial.println();
             }
+
+            // Reset buffers.
+            // Set data valid to true, as this is a valid start of data.
+            // valid will be set to false as soon as any error occurs.
+            writePosition = 0;
+            data = DcfTimeData();
+            data.valid = true;
             return;
         }
 
-        // Actual data bit
-        bool value = duration > DCFSettings.SIGNAL_LOGIC_ONE_THRESHOLD_MS;
-
-        if (value)
+        // If we are in the long pause before end of message,
+        // do the conversion to system time
+        // TODO
+        if (writePosition == 58)
         {
-            Serial.print("1");
+            Serial.print("C");
         }
-        else
+        if (writePosition == 59)
         {
-            Serial.print("0");
+            Serial.print("D");
         }
-
-        if (signalCounter % 5 == 4)
-        {
-            Serial.print(" ");
-        }
-
-        signalCounter++;
+        return;
     }
+
+    // Actual data bit
+    bool value = duration > DCFSettings.SIGNAL_LOGIC_ONE_THRESHOLD_MS;
+
+    if (value)
+    {
+        Serial.print("1");
+    }
+    else
+    {
+        Serial.print("0");
+    }
+
+    if (writePosition % 5 == 4)
+    {
+        Serial.print(" ");
+    }
+
+    if (value)
+    {
+        // If value is true, add respective value to the data
+        switch (writePosition)
+        {
+        case 0:
+            data.valid = false;
+            break;
+        case 17:
+            data.timezone += 2;
+            break;
+        case 18:
+            data.timezone += 1;
+            break;
+        case 21:
+        case 22:
+        case 23:
+        case 24:
+        case 25:
+        case 26:
+        case 27:
+            data.timestamp.minutesByte() |= (1 << (writePosition - 21));
+            break;
+        case 29:
+        case 30:
+        case 31:
+        case 32:
+        case 33:
+        case 34:
+            data.timestamp.hoursByte() |= (1 << (writePosition - 29));
+            break;
+        case 36:
+        case 37:
+        case 38:
+        case 39:
+        case 40:
+        case 41:
+            data.timestamp.dayByte() |= (1 << (writePosition - 36));
+            break;
+        case 42:
+        case 43:
+        case 44:
+            data.timestamp.dayOfWeekByte() |= (1 << (writePosition - 42));
+            break;
+        case 45:
+        case 46:
+        case 47:
+        case 48:
+        case 49:
+            data.timestamp.monthByte() |= (1 << (writePosition - 45));
+            break;
+        case 50:
+        case 51:
+        case 52:
+        case 53:
+        case 54:
+        case 55:
+        case 56:
+        case 57:
+            data.timestamp.yearByte() |= (1 << (writePosition - 50));
+            break;
+
+        default:
+            break;
+        }
+    }
+
+    // Parity checks
+    static bool parity = false;
+    if (writePosition == 20)
+    {
+        parity = 0;
+    }
+    else if (writePosition > 20)
+    {
+        parity ^= value;
+        if (writePosition == 28 ||
+            writePosition == 35 ||
+            writePosition == 58)
+        {
+            if (parity)
+            {
+                Serial.println("Parity error!");
+                data.valid = false;
+            }
+        }
+    }
+
+    // 'False' is only relevant for bit 20, therefore check
+    // that explicitely and then continue
+    if (writePosition == 20 && !value)
+    {
+        data.valid = false;
+    }
+
+    writePosition++;
 }
 
 Dcf77_t Dcf77;
+
+void DcfTimeData::print()
+{
+    Serial.print(valid ? "valid" : "invalid");
+    Serial.print(" - Timezone: ");
+    Serial.print(timezone);
+    Serial.print(" - ");
+    timestamp.print();
+}
