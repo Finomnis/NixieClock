@@ -15,7 +15,7 @@ namespace
         const unsigned long SIGNAL_ON_MAX_TIME = 300;
     } DCFSettings;
 
-    void dcf77Interrupt_proxy()
+    void dcf77Interrupt()
     {
         // Only 'submit' signals once you know the period is really over.
         // This is only the case once we have seen a new signal of the opposite
@@ -88,7 +88,7 @@ namespace
 
 void Dcf77_t::init()
 {
-    attachInterrupt(digitalPinToInterrupt(PINS.DCF77), dcf77Interrupt_proxy, CHANGE);
+    attachInterrupt(digitalPinToInterrupt(PINS.DCF77), dcf77Interrupt, CHANGE);
 }
 
 void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long duration)
