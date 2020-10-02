@@ -10,10 +10,58 @@ namespace
 
 void setup()
 {
-    Serial.begin(9600);
+    Serial.begin(115200);
     PINS.initializePins();
     RealTimeClock.init();
     Dcf77.init();
+}
+
+void updateDcf()
+{
+    // If dcf has new time available, synchronize RealTimeClock
+    DcfTimeData dcfTimeData;
+    bool dcfStable;
+    if (Dcf77.retrieveNewData(dcfTimeData, dcfStable))
+    {
+        if (!dcfStable)
+            return;
+
+        uint8_t secondsOffset = 0;
+        unsigned long syncTime = dcfTimeData.systemTime;
+        while (syncTime < millis() + 500 && secondsOffset < 5)
+        {
+            syncTime += 1000;
+            secondsOffset += 1;
+        }
+
+        if (secondsOffset >= 5)
+        {
+            Serial.println("Warning: Can't sync, delay was too big!");
+            return;
+        }
+
+        // Adjust time
+        RealTimeTimestamp t = dcfTimeData.timestamp;
+        t.secondsByte() = secondsOffset;
+
+        // TODO LED on
+
+        // Idle wait to turn LED back off
+        while (millis() + 400 < syncTime)
+        {
+        }
+
+        // TODO LED off
+
+        // Idle wait to sync point
+        while (millis() < syncTime)
+        {
+        }
+
+        // Sync
+        RealTimeClock.setTime(t);
+        Serial.println("Synced!");
+    }
 }
 
 void loop()
@@ -35,16 +83,5 @@ void loop()
         }
     }
 
-    // If dcf has new time available, synchronize RealTimeClock
-    DcfTimeData dcfTimeData;
-    bool dcfStable;
-    if (Dcf77.retrieveNewData(dcfTimeData, dcfStable))
-    {
-        unsigned long now = millis();
-        Serial.print(dcfStable ? "Got new stable time data: " : "Got new unstable time data: ");
-        dcfTimeData.print();
-        Serial.print("Delay: ");
-        Serial.print(now - dcfTimeData.systemTime);
-        Serial.println(" ms");
-    }
+    updateDcf();
 }

@@ -19,7 +19,7 @@ struct DcfTimeData
 
 class Dcf77_t
 {
-    static constexpr uint8_t debugMessageVerbosity = 2;
+    static constexpr uint8_t debugMessageVerbosity = 0;
 
 public:
     void init();
