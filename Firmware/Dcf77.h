@@ -26,6 +26,7 @@ public:
     void submitSignal(bool positive, unsigned long startTime, unsigned long duration);
     bool retrieveNewData(DcfTimeData &data, bool &stable);
     unsigned long getLastSyncTime();
+    unsigned long getLastStableSyncTime();
     int getReceiveProgress();
 
 private:
@@ -37,6 +38,7 @@ private:
     volatile bool newDataAvailable{false};
     volatile bool currentDataStable{false};
     volatile unsigned long lastSyncTime{0};
+    volatile unsigned long lastStableSyncTime{0};
 
 private:
     // Receive buffer

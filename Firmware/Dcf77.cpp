@@ -111,12 +111,22 @@ void Dcf77_t::updateData(const DcfTimeData &data, bool stable)
     currentDataStable = stable;
     newDataAvailable = true;
     lastSyncTime = millis();
+    if (stable)
+    {
+        lastStableSyncTime = lastSyncTime;
+    }
 }
 
 unsigned long Dcf77_t::getLastSyncTime()
 {
     InterruptsLock lock();
     return lastSyncTime;
+}
+
+unsigned long Dcf77_t::getLastStableSyncTime()
+{
+    InterruptsLock lock();
+    return lastStableSyncTime;
 }
 
 int Dcf77_t::getReceiveProgress()

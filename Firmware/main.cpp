@@ -8,6 +8,7 @@
 
 namespace
 {
+    constexpr unsigned long TIME_UNTIL_DCF_ANIMATION_SHOWS_AGAIN = 5L * 60L * 1000L;
 } // namespace
 
 void setup()
@@ -82,7 +83,7 @@ void updateDcf()
 
         // Sync
         RealTimeClock.setTime(t);
-        Serial.println("Synced!");
+        //Serial.println("Synced!");
 
         // TODO colon off
         NixieDisplay.setColon(false);
@@ -157,7 +158,8 @@ void updateDisplay()
         NixieDisplay.setColon(!digitalRead(PINS.DCF77));
     }
 
-    if (RealTimeClock.isTimeValid() && currentTime.isInitialized())
+    if (RealTimeClock.isTimeValid() && currentTime.isInitialized() &&
+        (Dcf77.getLastStableSyncTime() + TIME_UNTIL_DCF_ANIMATION_SHOWS_AGAIN) > millis())
     {
         NixieDisplay.clearDots();
     }
