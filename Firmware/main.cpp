@@ -6,14 +6,6 @@
 
 namespace
 {
-    volatile bool realTimeClockChanged = false;
-
-    void realTimeClockChangedHandler()
-    {
-        realTimeClockChanged = true;
-    }
-
-    RealTimeTimestamp currentTime;
 } // namespace
 
 void setup()
@@ -22,23 +14,23 @@ void setup()
     PINS.initializePins();
     RealTimeClock.init();
     Dcf77.init();
-
-    //attachInterrupt(digitalPinToInterrupt(PINS.REAL_TIME_CLOCK_CHANGED), realTimeClockChangedHandler, FALLING);
 }
 
 void loop()
 {
-    // TODO don't update clock if we have a new timestamp from DCF77
-    if (realTimeClockChanged)
+    // Update rtc if necessary.
+    // Has to be done in main() because interrupts cannot communicate over i2c.
+    if (RealTimeClock.tryFetchTime())
     {
-        realTimeClockChanged = false;
+        // tryFetchTime yieled a new time state
+        RealTimeTimestamp currentTime;
         if (!RealTimeClock.getTime(currentTime))
         {
             Serial.println("Unable to fetch current time!");
-            currentTime = RealTimeTimestamp();
         }
-
-        // TODO do something more useful
-        //currentTime.print();
+        else
+        {
+            currentTime.print();
+        }
     }
 }
