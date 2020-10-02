@@ -110,6 +110,24 @@ void Dcf77_t::updateData(const DcfTimeData &data, bool stable)
     currentData = data;
     currentDataStable = stable;
     newDataAvailable = true;
+    lastSyncTime = millis();
+}
+
+unsigned long Dcf77_t::getLastSyncTime()
+{
+    InterruptsLock lock();
+    return lastSyncTime;
+}
+
+int Dcf77_t::getReceiveProgress()
+{
+    InterruptsLock lock();
+    if (!incomingData.valid)
+    {
+        return 0;
+    }
+
+    return writePosition;
 }
 
 void Dcf77_t::handleNewTimeData(const DcfTimeData &data)
@@ -191,10 +209,6 @@ bool Dcf77_t::retrieveNewData(DcfTimeData &data, bool &stable)
 
 void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long duration)
 {
-    static DcfTimeData data;
-    static int writePosition = 0;
-    static bool foundError = false;
-
     // Debug infos
     if (debugMessageVerbosity >= 5)
     {
@@ -223,7 +237,7 @@ void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long
         {
             Serial.println("Invalid signal!");
         }
-        data.valid = false;
+        incomingData.valid = false;
         return;
     }
 
@@ -233,19 +247,19 @@ void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long
         // If we catch end-of-message signal
         if (duration > DCFSettings.SIGNAL_END_OF_MESSAGE_THRESHOLD_MS)
         {
-            if (data.valid)
+            if (incomingData.valid)
             {
                 // Sync point is at the end of the long pause
                 // we are currently in
-                data.systemTime = startTime + duration;
+                incomingData.systemTime = startTime + duration;
 
                 // This code will get run at ~100 ms into the new minute, so
                 // this is a good point to read the rtc for comparison
-                data.rtcTimeValid = RealTimeClock.isTimeValid();
-                data.rtcTime = RealTimeClock.getTime().toUnixTime();
+                incomingData.rtcTimeValid = RealTimeClock.isTimeValid();
+                incomingData.rtcTime = RealTimeClock.getTime().toUnixTime();
 
                 // Submit timestamp
-                handleNewTimeData(data);
+                handleNewTimeData(incomingData);
             }
             else
             {
@@ -259,16 +273,16 @@ void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long
             // Set data valid to true, as this is a valid start of data.
             // valid will be set to false as soon as any error occurs.
             writePosition = 0;
-            data = DcfTimeData();
-            data.valid = true;
+            incomingData = DcfTimeData();
+            incomingData.valid = true;
             return;
         }
 
         // If we are in the long pause before end of message,
         // do the conversion to system time
-        if (writePosition == 58 && data.valid)
+        if (writePosition == 58 && incomingData.valid)
         {
-            data.unixTime = data.timestamp.toUnixTime();
+            incomingData.unixTime = incomingData.timestamp.toUnixTime();
         }
         return;
     }
@@ -300,13 +314,13 @@ void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long
         switch (writePosition)
         {
         case 0:
-            data.valid = false;
+            incomingData.valid = false;
             break;
         case 17:
-            data.timestamp.timezone += 2;
+            incomingData.timestamp.timezone += 2;
             break;
         case 18:
-            data.timestamp.timezone += 1;
+            incomingData.timestamp.timezone += 1;
             break;
         case 21:
         case 22:
@@ -315,7 +329,7 @@ void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long
         case 25:
         case 26:
         case 27:
-            data.timestamp.minutesByte() |= (1 << (writePosition - 21));
+            incomingData.timestamp.minutesByte() |= (1 << (writePosition - 21));
             break;
         case 29:
         case 30:
@@ -323,7 +337,7 @@ void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long
         case 32:
         case 33:
         case 34:
-            data.timestamp.hoursByte() |= (1 << (writePosition - 29));
+            incomingData.timestamp.hoursByte() |= (1 << (writePosition - 29));
             break;
         case 36:
         case 37:
@@ -331,19 +345,19 @@ void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long
         case 39:
         case 40:
         case 41:
-            data.timestamp.dayByte() |= (1 << (writePosition - 36));
+            incomingData.timestamp.dayByte() |= (1 << (writePosition - 36));
             break;
         case 42:
         case 43:
         case 44:
-            data.timestamp.dayOfWeekByte() |= (1 << (writePosition - 42));
+            incomingData.timestamp.dayOfWeekByte() |= (1 << (writePosition - 42));
             break;
         case 45:
         case 46:
         case 47:
         case 48:
         case 49:
-            data.timestamp.monthByte() |= (1 << (writePosition - 45));
+            incomingData.timestamp.monthByte() |= (1 << (writePosition - 45));
             break;
         case 50:
         case 51:
@@ -353,7 +367,7 @@ void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long
         case 55:
         case 56:
         case 57:
-            data.timestamp.yearByte() |= (1 << (writePosition - 50));
+            incomingData.timestamp.yearByte() |= (1 << (writePosition - 50));
             break;
 
         default:
@@ -380,7 +394,7 @@ void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long
                 {
                     Serial.println("Parity error!");
                 }
-                data.valid = false;
+                incomingData.valid = false;
             }
         }
     }
@@ -389,7 +403,7 @@ void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long
     // that explicitely and then continue
     if (writePosition == 20 && !value)
     {
-        data.valid = false;
+        incomingData.valid = false;
     }
 
     writePosition++;
