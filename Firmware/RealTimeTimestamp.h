@@ -7,7 +7,7 @@ struct RealTimeTimestamp
 {
     static constexpr uint8_t DATA_LENGTH = 7;
     char data[DATA_LENGTH] = {0};
-    uint8_t timezone = 0;
+    uint8_t timezone{0};
 
     inline uint8_t getSeconds()
     {

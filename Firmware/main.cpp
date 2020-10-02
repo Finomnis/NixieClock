@@ -30,7 +30,8 @@ void loop()
         }
         else
         {
-            currentTime.print();
+            if (currentTime.isInitialized())
+                currentTime.print();
         }
     }
 }

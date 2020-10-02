@@ -1,6 +1,7 @@
 #include "Dcf77.h"
 
 #include "Pins.h"
+#include "RealTimeClock.h"
 
 namespace
 {
@@ -98,27 +99,24 @@ void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long
     static int writePosition = 0;
     static bool foundError = false;
 
-    /*if (false)
+    // Debug infos
+    /*
+    unsigned long lag = millis() - startTime;
+    if (positive)
     {
-
-        unsigned long lag = millis() - startTime;
-        if (positive)
-        {
-            Serial.print("+        ");
-        }
-        else
-        {
-            Serial.print("-  ");
-        }
-
-        Serial.print(duration);
-        Serial.print("    (lag: ");
-        Serial.print(lag);
-        Serial.print(" ms)");
-        Serial.println();
+        Serial.print("+        ");
     }
     else
-    {*/
+    {
+        Serial.print("-  ");
+    }
+
+    Serial.print(duration);
+    Serial.print("    (lag: ");
+    Serial.print(lag);
+    Serial.print(" ms)");
+    Serial.println();
+    */
 
     // Sanity checks
     if ((positive && (duration > DCFSettings.SIGNAL_ON_MAX_TIME || duration < DCFSettings.SIGNAL_ON_MIN_TIME)) ||
@@ -129,7 +127,7 @@ void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long
         return;
     }
 
-    // Catch potential end-of-message signal
+    // All non-positive handlers. Are a lot less, therefore extracted into this if.
     if (!positive)
     {
         // If we catch end-of-message signal
@@ -140,13 +138,26 @@ void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long
                 // Sync point is at the end of the long pause
                 // we are currently in
                 data.systemTime = startTime + duration;
+
+                // This code will get run at ~100 ms into the new minute, so
+                // this is a good point to read the rtc for comparison
+                RealTimeTimestamp t;
+                data.rtcTimeValid = RealTimeClock.getTime(t);
+                data.rtcTime = t.toUnixTime();
+
                 // TODO do something cool
-                Serial.print("  ");
-                data.print();
+                if (printDebugMessages)
+                {
+                    Serial.print("  ");
+                    data.print();
+                }
             }
             else
             {
-                Serial.println();
+                if (printDebugMessages)
+                {
+                    Serial.println();
+                }
             }
 
             // Reset buffers.
@@ -160,14 +171,9 @@ void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long
 
         // If we are in the long pause before end of message,
         // do the conversion to system time
-        // TODO
-        if (writePosition == 58)
+        if (writePosition == 58 && data.valid)
         {
-            Serial.print("C");
-        }
-        if (writePosition == 59)
-        {
-            Serial.print("D");
+            data.unixTime = data.timestamp.toUnixTime();
         }
         return;
     }
@@ -175,18 +181,22 @@ void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long
     // Actual data bit
     bool value = duration > DCFSettings.SIGNAL_LOGIC_ONE_THRESHOLD_MS;
 
-    if (value)
+    // Print data to console if requested
+    if (printDebugMessages)
     {
-        Serial.print("1");
-    }
-    else
-    {
-        Serial.print("0");
-    }
+        if (value)
+        {
+            Serial.print("1");
+        }
+        else
+        {
+            Serial.print("0");
+        }
 
-    if (writePosition % 5 == 4)
-    {
-        Serial.print(" ");
+        if (writePosition % 5 == 4)
+        {
+            Serial.print(" ");
+        }
     }
 
     if (value)
@@ -198,10 +208,10 @@ void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long
             data.valid = false;
             break;
         case 17:
-            data.timezone += 2;
+            data.timestamp.timezone += 2;
             break;
         case 18:
-            data.timezone += 1;
+            data.timestamp.timezone += 1;
             break;
         case 21:
         case 22:
@@ -292,8 +302,16 @@ Dcf77_t Dcf77;
 void DcfTimeData::print()
 {
     Serial.print(valid ? "valid" : "invalid");
-    Serial.print(" - Timezone: ");
-    Serial.print(timezone);
+    Serial.print(" - Timezone:");
+    Serial.print(timestamp.timezone);
+    Serial.print(" - OffsetSystem:");
+    Serial.print(unixTime - systemTime / 1000);
+    Serial.print(" - OffsetRtc:");
+    Serial.print(static_cast<long>(unixTime - rtcTime));
+    Serial.print(" - RtcTime:");
+    Serial.print(rtcTime);
+    Serial.print(" - UnixTime:");
+    Serial.print(unixTime);
     Serial.print(" - ");
     timestamp.print();
 }
