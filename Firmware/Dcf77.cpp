@@ -93,6 +93,16 @@ void Dcf77_t::init()
     attachInterrupt(digitalPinToInterrupt(PINS.DCF77), dcf77Interrupt, CHANGE);
 }
 
+void Dcf77_t::handleNewTimeData(const DcfTimeData &data)
+{
+    // TODO do something cool
+    if (printDebugMessages)
+    {
+        Serial.print("  ");
+        data.print();
+    }
+}
+
 void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long duration)
 {
     static DcfTimeData data;
@@ -145,12 +155,8 @@ void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long
                 data.rtcTimeValid = RealTimeClock.getTime(t);
                 data.rtcTime = t.toUnixTime();
 
-                // TODO do something cool
-                if (printDebugMessages)
-                {
-                    Serial.print("  ");
-                    data.print();
-                }
+                // Submit timestamp
+                handleNewTimeData(data);
             }
             else
             {
@@ -299,7 +305,7 @@ void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long
 
 Dcf77_t Dcf77;
 
-void DcfTimeData::print()
+void DcfTimeData::print() const
 {
     Serial.print(valid ? "valid" : "invalid");
     Serial.print(" - Timezone:");

@@ -14,7 +14,7 @@ struct DcfTimeData
     bool rtcTimeValid{false};
     bool valid{false};
 
-    void print();
+    void print() const;
 };
 
 class Dcf77_t
@@ -26,8 +26,12 @@ public:
     void submitSignal(bool positive, unsigned long startTime, unsigned long duration);
 
 private:
+    void handleNewTimeData(const DcfTimeData &data);
+
+private:
     DcfTimeData currentData;
     DcfTimeData previousData;
+    volatile bool newDataAvailable{false};
 };
 
 extern Dcf77_t Dcf77;

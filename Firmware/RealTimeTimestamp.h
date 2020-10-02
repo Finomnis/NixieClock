@@ -9,93 +9,93 @@ struct RealTimeTimestamp
     char data[DATA_LENGTH] = {0};
     uint8_t timezone{0};
 
-    inline uint8_t getSeconds()
+    inline uint8_t getSeconds() const
     {
         return getSecondsMsd() * 10 + getSecondsLsd();
     }
-    inline uint8_t getMinutes()
+    inline uint8_t getMinutes() const
     {
         return getMinutesMsd() * 10 + getMinutesLsd();
     }
-    inline uint8_t getHours()
+    inline uint8_t getHours() const
     {
         return getHoursMsd() * 10 + getHoursLsd();
     }
-    inline uint8_t getDayOfWeek()
+    inline uint8_t getDayOfWeek() const
     {
         return data[3] & 0b111;
     }
-    inline uint8_t getDay()
+    inline uint8_t getDay() const
     {
         return getDayMsd() * 10 + getDayLsd();
     }
-    inline uint8_t getMonth()
+    inline uint8_t getMonth() const
     {
         return getMonthMsd() * 10 + getMonthLsd();
     }
-    inline uint16_t getYear()
+    inline uint16_t getYear() const
     {
         return 2000 + 100 * getCentury() + getYearMsd() * 10 + getYearLsd();
     }
-    inline uint8_t getTimezone()
+    inline uint8_t getTimezone() const
     {
         return timezone;
     }
 
-    inline uint8_t getSecondsMsd()
+    inline uint8_t getSecondsMsd() const
     {
         return (data[0] & 0b1110000) >> 4;
     }
-    inline uint8_t getSecondsLsd()
+    inline uint8_t getSecondsLsd() const
     {
         return data[0] & 0b1111;
     }
-    inline uint8_t getMinutesMsd()
+    inline uint8_t getMinutesMsd() const
     {
         return (data[1] & 0b1110000) >> 4;
     }
-    inline uint8_t getMinutesLsd()
+    inline uint8_t getMinutesLsd() const
     {
         return data[1] & 0b1111;
     }
-    inline uint8_t getHoursMsd()
+    inline uint8_t getHoursMsd() const
     {
         return (data[2] & 0b110000) >> 4;
     }
-    inline uint8_t getHoursLsd()
+    inline uint8_t getHoursLsd() const
     {
         return data[2] & 0b1111;
     }
-    inline uint8_t getDayMsd()
+    inline uint8_t getDayMsd() const
     {
         return (data[4] & 0b110000) >> 4;
     }
-    inline uint8_t getDayLsd()
+    inline uint8_t getDayLsd() const
     {
         return data[4] & 0b1111;
     }
-    inline uint8_t getMonthMsd()
+    inline uint8_t getMonthMsd() const
     {
         return (data[5] & 0b10000) >> 4;
     }
-    inline uint8_t getMonthLsd()
+    inline uint8_t getMonthLsd() const
     {
         return data[5] & 0b1111;
     }
-    inline uint8_t getYearMsd()
+    inline uint8_t getYearMsd() const
     {
         return (data[6] & 0b11110000) >> 4;
     }
-    inline uint8_t getYearLsd()
+    inline uint8_t getYearLsd() const
     {
         return data[6] & 0b1111;
     }
-    inline uint8_t getCentury()
+    inline uint8_t getCentury() const
     {
         return (data[5] & 0b10000000) >> 7;
     }
 
-    inline bool isInitialized()
+    inline bool isInitialized() const
     {
         return (data[2] & 0b1000000) == 0;
     }
@@ -135,6 +135,6 @@ struct RealTimeTimestamp
         return data[6];
     }
 
-    time_t toUnixTime();
-    void print();
+    time_t toUnixTime() const;
+    void print() const;
 };

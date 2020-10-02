@@ -1,6 +1,6 @@
 #include "RealTimeTimestamp.h"
 
-void RealTimeTimestamp::print()
+void RealTimeTimestamp::print() const
 {
     Serial.print(getYear());
     Serial.print("-");
@@ -34,7 +34,7 @@ void RealTimeTimestamp::print()
     Serial.println();
 }
 
-time_t RealTimeTimestamp::toUnixTime()
+time_t RealTimeTimestamp::toUnixTime() const
 {
     TimeElements timeElements;
     timeElements.Second = 0;
