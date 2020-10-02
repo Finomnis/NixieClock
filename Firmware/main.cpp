@@ -3,6 +3,8 @@
 #include "RealTimeClock.h"
 #include "Dcf77.h"
 #include "Pins.h"
+#include "NixieDisplay.h"
+#include "SineAnimation.h"
 
 namespace
 {
@@ -44,7 +46,34 @@ void updateDcf()
         RealTimeTimestamp t = dcfTimeData.timestamp;
         t.secondsByte() = secondsOffset;
 
-        // TODO LED on
+        // Do a quick blink during waiting time, to show sync happened.
+
+        // TODO colon on
+        NixieDisplay.setColon(true);
+        NixieDisplay.clearDots();
+        NixieDisplay.setNumbers(t.getHoursMsd(),
+                                t.getHoursLsd(),
+                                t.getMinutesMsd(),
+                                t.getMinutesLsd());
+        NixieDisplay.flush();
+
+        // 200ms blink, starting at 400ms, ending at 600ms
+        while (millis() + 600 < syncTime)
+        {
+        }
+
+        // TODO colon off
+        NixieDisplay.setColon(false);
+        NixieDisplay.flush();
+
+        // End of 200ms blink
+        while (millis() + 400 < syncTime)
+        {
+        }
+
+        // TODO colon on
+        NixieDisplay.setColon(true);
+        NixieDisplay.flush();
 
         // Idle wait to sync point
         while (millis() < syncTime)
@@ -55,8 +84,89 @@ void updateDcf()
         RealTimeClock.setTime(t);
         Serial.println("Synced!");
 
-        // TODO LED off
+        // TODO colon off
+        NixieDisplay.setColon(false);
+        NixieDisplay.flush();
     }
+}
+
+void renderLoadingBar()
+{
+    unsigned long lastSync = Dcf77.getLastSyncTime();
+    unsigned long now = millis();
+
+    // Do a 'blink' on new time data
+    if (now < lastSync + 200)
+    {
+        NixieDisplay.setDots(0xFF);
+        SineAnimation.setActive(false);
+        return;
+    }
+    if (now < lastSync + 500)
+    {
+        NixieDisplay.setDots(0x00);
+        SineAnimation.setActive(false);
+        return;
+    }
+    if (now < lastSync + 800)
+    {
+        NixieDisplay.setDots(0xFF);
+        SineAnimation.setActive(false);
+        return;
+    }
+    if (now < lastSync + 1100)
+    {
+        NixieDisplay.setDots(0x00);
+        SineAnimation.setActive(false);
+        return;
+    }
+
+    unsigned int receiveProgress = Dcf77.getReceiveProgress();
+    unsigned int numProgressLeds = (receiveProgress * 7) / 58 + 1;
+
+    if (receiveProgress == 0)
+    {
+        // If freshly initialized or not synced for a while, show resync bar
+        SineAnimation.setActive(true);
+        SineAnimation.update();
+        return;
+    }
+
+    SineAnimation.setActive(false);
+    NixieDisplay.clearDots();
+    for (unsigned int i = 0; i < numProgressLeds; i++)
+    {
+        NixieDisplay.setDot(i);
+    }
+}
+
+void updateDisplay()
+{
+    const auto &currentTime = RealTimeClock.getTime();
+    if (RealTimeClock.isTimeValid() && currentTime.isInitialized())
+    {
+        NixieDisplay.setNumbers(currentTime.getHoursMsd(),
+                                currentTime.getHoursLsd(),
+                                currentTime.getMinutesMsd(),
+                                currentTime.getMinutesLsd());
+        NixieDisplay.setColon(currentTime.getSecondsLsd() % 2 == 0);
+    }
+    else
+    {
+        NixieDisplay.setNumbers(-1, -1, -1, -1);
+        NixieDisplay.setColon(!digitalRead(PINS.DCF77));
+    }
+
+    if (RealTimeClock.isTimeValid() && currentTime.isInitialized())
+    {
+        NixieDisplay.clearDots();
+    }
+    else
+    {
+        renderLoadingBar();
+    }
+
+    NixieDisplay.flush();
 }
 
 void loop()
@@ -66,17 +176,19 @@ void loop()
     if (RealTimeClock.tryFetchTime())
     {
         // tryFetchTime yieled a new time state
-        RealTimeTimestamp currentTime;
-        if (!RealTimeClock.getTime(currentTime))
+        if (!RealTimeClock.isTimeValid())
         {
             Serial.println("Unable to fetch current time!");
         }
         else
         {
-            if (currentTime.isInitialized())
-                currentTime.print();
+            const auto &currentTime = RealTimeClock.getTime();
+            //if (currentTime.isInitialized())
+            //    currentTime.print();
         }
     }
 
     updateDcf();
+
+    updateDisplay();
 }
