@@ -34,4 +34,17 @@ void loop()
                 currentTime.print();
         }
     }
+
+    // If dcf has new time available, synchronize RealTimeClock
+    DcfTimeData dcfTimeData;
+    bool dcfStable;
+    if (Dcf77.retrieveNewData(dcfTimeData, dcfStable))
+    {
+        unsigned long now = millis();
+        Serial.print(dcfStable ? "Got new stable time data: " : "Got new unstable time data: ");
+        dcfTimeData.print();
+        Serial.print("Delay: ");
+        Serial.print(now - dcfTimeData.systemTime);
+        Serial.println(" ms");
+    }
 }

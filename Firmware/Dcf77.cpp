@@ -95,10 +95,6 @@ void Dcf77_t::init()
 
 void Dcf77_t::updateData(const DcfTimeData &data, bool stable)
 {
-    InterruptsLock lock();
-    currentData = data;
-    currentDataStable = stable;
-    newDataAvailable = true;
     if (debugMessageVerbosity >= 1)
     {
         if (stable)
@@ -110,6 +106,10 @@ void Dcf77_t::updateData(const DcfTimeData &data, bool stable)
             Serial.println("New time data! (Unstable)");
         }
     }
+    InterruptsLock lock();
+    currentData = data;
+    currentDataStable = stable;
+    newDataAvailable = true;
 }
 
 void Dcf77_t::handleNewTimeData(const DcfTimeData &data)
@@ -142,7 +142,7 @@ void Dcf77_t::handleNewTimeData(const DcfTimeData &data)
             {
                 if (debugMessageVerbosity >= 1)
                 {
-                    Serial.println("Stable: Rtc offset matches.");
+                    Serial.println("Stable: Rtc offsets match.");
                 }
                 updateData(data, true);
                 return;
@@ -160,7 +160,7 @@ void Dcf77_t::handleNewTimeData(const DcfTimeData &data)
         {
             if (debugMessageVerbosity >= 1)
             {
-                Serial.println("Stable: System clock offset matches.");
+                Serial.println("Stable: System clock offsets match.");
             }
             updateData(data, true);
             return;
@@ -168,6 +168,25 @@ void Dcf77_t::handleNewTimeData(const DcfTimeData &data)
     }
 
     updateData(data, false);
+}
+
+bool Dcf77_t::retrieveNewData(DcfTimeData &data, bool &stable)
+{
+    InterruptsLock lock();
+    if (!newDataAvailable)
+    {
+        return false;
+    }
+    newDataAvailable = false;
+
+    if (currentData.valid == false)
+    {
+        return false;
+    }
+
+    data = currentData;
+    stable = currentDataStable;
+    return true;
 }
 
 void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long duration)

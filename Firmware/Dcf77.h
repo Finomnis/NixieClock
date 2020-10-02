@@ -24,6 +24,7 @@ class Dcf77_t
 public:
     void init();
     void submitSignal(bool positive, unsigned long startTime, unsigned long duration);
+    bool retrieveNewData(DcfTimeData &data, bool &stable);
 
 private:
     void handleNewTimeData(const DcfTimeData &data);
