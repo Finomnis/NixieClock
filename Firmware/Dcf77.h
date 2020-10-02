@@ -19,7 +19,7 @@ struct DcfTimeData
 
 class Dcf77_t
 {
-    static constexpr bool printDebugMessages = false;
+    static constexpr uint8_t debugMessageVerbosity = 2;
 
 public:
     void init();
@@ -27,11 +27,12 @@ public:
 
 private:
     void handleNewTimeData(const DcfTimeData &data);
+    void updateData(const DcfTimeData &data, bool stable);
 
 private:
     DcfTimeData currentData;
-    DcfTimeData previousData;
     volatile bool newDataAvailable{false};
+    volatile bool currentDataStable{false};
 };
 
 extern Dcf77_t Dcf77;

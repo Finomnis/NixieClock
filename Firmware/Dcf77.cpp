@@ -2,10 +2,10 @@
 
 #include "Pins.h"
 #include "RealTimeClock.h"
+#include "InterruptsLock.h"
 
 namespace
 {
-
     constexpr struct
     {
         const unsigned long FILTER_TIME_MS = 20;
@@ -93,14 +93,81 @@ void Dcf77_t::init()
     attachInterrupt(digitalPinToInterrupt(PINS.DCF77), dcf77Interrupt, CHANGE);
 }
 
+void Dcf77_t::updateData(const DcfTimeData &data, bool stable)
+{
+    InterruptsLock lock();
+    currentData = data;
+    currentDataStable = stable;
+    newDataAvailable = true;
+    if (debugMessageVerbosity >= 1)
+    {
+        if (stable)
+        {
+            Serial.println("New time data! (Stable)");
+        }
+        else
+        {
+            Serial.println("New time data! (Unstable)");
+        }
+    }
+}
+
 void Dcf77_t::handleNewTimeData(const DcfTimeData &data)
 {
-    // TODO do something cool
-    if (printDebugMessages)
+    if (debugMessageVerbosity >= 2)
     {
         Serial.print("  ");
         data.print();
     }
+
+    if (data.rtcTimeValid)
+    {
+        long rtcOffset = static_cast<long>(data.unixTime - data.rtcTime);
+        if (rtcOffset <= 2 && rtcOffset >= -2)
+        {
+            if (debugMessageVerbosity >= 1)
+            {
+                Serial.println("Stable: Change minimal.");
+            }
+            updateData(data, true);
+            return;
+        }
+
+        if (currentData.valid)
+        {
+            long previousRtcOffset = static_cast<long>(currentData.unixTime - currentData.rtcTime);
+            long offsetDifference = rtcOffset - previousRtcOffset;
+
+            if (offsetDifference <= 2 && offsetDifference >= -2)
+            {
+                if (debugMessageVerbosity >= 1)
+                {
+                    Serial.println("Stable: Rtc offset matches.");
+                }
+                updateData(data, true);
+                return;
+            }
+        }
+    }
+
+    if (currentData.valid)
+    {
+        long systemOffset = static_cast<long>(data.unixTime - data.systemTime / 1000);
+        long previousSystemOffset = static_cast<long>(currentData.unixTime - currentData.systemTime / 1000);
+        long offsetDifference = systemOffset - previousSystemOffset;
+
+        if (offsetDifference <= 2 && offsetDifference >= -2)
+        {
+            if (debugMessageVerbosity >= 1)
+            {
+                Serial.println("Stable: System clock offset matches.");
+            }
+            updateData(data, true);
+            return;
+        }
+    }
+
+    updateData(data, false);
 }
 
 void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long duration)
@@ -110,23 +177,24 @@ void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long
     static bool foundError = false;
 
     // Debug infos
-    /*
-    unsigned long lag = millis() - startTime;
-    if (positive)
+    if (debugMessageVerbosity >= 5)
     {
-        Serial.print("+        ");
-    }
-    else
-    {
-        Serial.print("-  ");
-    }
+        unsigned long lag = millis() - startTime;
+        if (positive)
+        {
+            Serial.print("+        ");
+        }
+        else
+        {
+            Serial.print("-  ");
+        }
 
-    Serial.print(duration);
-    Serial.print("    (lag: ");
-    Serial.print(lag);
-    Serial.print(" ms)");
-    Serial.println();
-    */
+        Serial.print(duration);
+        Serial.print("    (lag: ");
+        Serial.print(lag);
+        Serial.print(" ms)");
+        Serial.println();
+    }
 
     // Sanity checks
     if ((positive && (duration > DCFSettings.SIGNAL_ON_MAX_TIME || duration < DCFSettings.SIGNAL_ON_MIN_TIME)) ||
@@ -160,7 +228,7 @@ void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long
             }
             else
             {
-                if (printDebugMessages)
+                if (debugMessageVerbosity >= 2)
                 {
                     Serial.println();
                 }
@@ -188,7 +256,7 @@ void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long
     bool value = duration > DCFSettings.SIGNAL_LOGIC_ONE_THRESHOLD_MS;
 
     // Print data to console if requested
-    if (printDebugMessages)
+    if (debugMessageVerbosity >= 2)
     {
         if (value)
         {
