@@ -32,6 +32,11 @@ void NixieDisplay_t::setDot(int8_t dotPos)
     content.dots |= (1 << dotPos);
 }
 
+void NixieDisplay_t::setDots(uint8_t dots)
+{
+    content.dots = dots;
+}
+
 void NixieDisplay_t::flush()
 {
     NixieDisplayContent newFrame;

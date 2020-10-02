@@ -17,6 +17,7 @@ public:
     void setColon(bool on);
     void clearDots();
     void setDot(int8_t dotPos);
+    void setDots(uint8_t dots);
 
 private:
     NixieDisplayContent content;
