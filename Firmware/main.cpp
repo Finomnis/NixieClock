@@ -46,13 +46,6 @@ void updateDcf()
 
         // TODO LED on
 
-        // Idle wait to turn LED back off
-        while (millis() + 400 < syncTime)
-        {
-        }
-
-        // TODO LED off
-
         // Idle wait to sync point
         while (millis() < syncTime)
         {
@@ -61,6 +54,8 @@ void updateDcf()
         // Sync
         RealTimeClock.setTime(t);
         Serial.println("Synced!");
+
+        // TODO LED off
     }
 }
 
