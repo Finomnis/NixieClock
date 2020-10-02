@@ -8,7 +8,7 @@
 
 namespace
 {
-    constexpr unsigned long TIME_UNTIL_DCF_ANIMATION_SHOWS_AGAIN = 5L * 60L * 1000L;
+    constexpr unsigned long TIME_UNTIL_DCF_ANIMATION_SHOWS_AGAIN = 4L * 60L * 60L * 1000L; // Four Hours (from time zone change to morning)
 } // namespace
 
 void setup()
