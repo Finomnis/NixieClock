@@ -1,11 +1,13 @@
 #pragma once
 
 #include <Arduino.h>
+#include <TimeLib.h>
 
 struct RealTimeTimestamp
 {
     static constexpr uint8_t DATA_LENGTH = 7;
     char data[DATA_LENGTH] = {0};
+    uint8_t timezone = 0;
 
     inline uint8_t getSeconds()
     {
@@ -34,6 +36,10 @@ struct RealTimeTimestamp
     inline uint16_t getYear()
     {
         return 2000 + 100 * getCentury() + getYearMsd() * 10 + getYearLsd();
+    }
+    inline uint8_t getTimezone()
+    {
+        return timezone;
     }
 
     inline uint8_t getSecondsMsd()
@@ -129,5 +135,6 @@ struct RealTimeTimestamp
         return data[6];
     }
 
+    time_t toUnixTime();
     void print();
 };

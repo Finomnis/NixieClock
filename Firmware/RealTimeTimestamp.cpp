@@ -33,3 +33,17 @@ void RealTimeTimestamp::print()
 
     Serial.println();
 }
+
+time_t RealTimeTimestamp::toUnixTime()
+{
+    TimeElements timeElements;
+    timeElements.Second = 0;
+    timeElements.Minute = getMinutes();
+    timeElements.Hour = getHours();
+    timeElements.Day = getDay();
+    timeElements.Month = getMonth();
+    timeElements.Year = CalendarYrToTm(getYear());
+    time_t unixTime = makeTime(timeElements);
+    unixTime -= timezone * SECS_PER_HOUR;
+    return unixTime;
+}
