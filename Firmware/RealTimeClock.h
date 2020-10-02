@@ -9,7 +9,14 @@ class RealTimeClock_t
 public:
     void init();
     void getInfo();
-    bool getTime(RealTimeTimestamp &t);
+    inline const RealTimeTimestamp &getTime()
+    {
+        return currentTime;
+    }
+    inline bool isTimeValid() const
+    {
+        return currentTimeValid;
+    }
     bool tryFetchTime();
     bool setTime(const RealTimeTimestamp &t);
 

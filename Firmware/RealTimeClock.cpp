@@ -137,18 +137,6 @@ bool RealTimeClock_t::tryFetchTime()
     return true;
 }
 
-bool RealTimeClock_t::getTime(RealTimeTimestamp &t)
-{
-    InterruptsLock lock();
-    if (!currentTimeValid)
-    {
-        return false;
-    }
-
-    t = currentTime;
-    return true;
-}
-
 void RealTimeClock_t::setNewTimeAvailable()
 {
     InterruptsLock lock();

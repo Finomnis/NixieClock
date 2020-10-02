@@ -219,7 +219,10 @@ void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long
     if ((positive && (duration > DCFSettings.SIGNAL_ON_MAX_TIME || duration < DCFSettings.SIGNAL_ON_MIN_TIME)) ||
         (!positive && (duration > DCFSettings.SIGNAL_OFF_MAX_TIME || duration < DCFSettings.SIGNAL_OFF_MIN_TIME)))
     {
-        Serial.println("Invalid signal!");
+        if (debugMessageVerbosity >= 1)
+        {
+            Serial.println("Invalid signal!");
+        }
         data.valid = false;
         return;
     }
@@ -238,9 +241,8 @@ void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long
 
                 // This code will get run at ~100 ms into the new minute, so
                 // this is a good point to read the rtc for comparison
-                RealTimeTimestamp t;
-                data.rtcTimeValid = RealTimeClock.getTime(t);
-                data.rtcTime = t.toUnixTime();
+                data.rtcTimeValid = RealTimeClock.isTimeValid();
+                data.rtcTime = RealTimeClock.getTime().toUnixTime();
 
                 // Submit timestamp
                 handleNewTimeData(data);
@@ -374,7 +376,10 @@ void Dcf77_t::submitSignal(bool positive, unsigned long startTime, unsigned long
         {
             if (parity)
             {
-                Serial.println("Parity error!");
+                if (debugMessageVerbosity >= 1)
+                {
+                    Serial.println("Parity error!");
+                }
                 data.valid = false;
             }
         }
