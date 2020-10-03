@@ -11,7 +11,7 @@ struct PINS_t
 
     const uint8_t NIXIE_DIM = PIN_PA5;
     const uint8_t NIXIE_DATA = PIN_PA6;
-    const uint8_t NIXIE_LE = PIN_PA7;
+    const uint8_t NIXIE_LATCH = PIN_PA7;
     const uint8_t NIXIE_CLK = PIN_PB5;
 
     void initializePins() const
@@ -21,7 +21,7 @@ struct PINS_t
         pinMode(HV_ENABLE, OUTPUT);
         pinMode(NIXIE_DIM, OUTPUT);
         pinMode(NIXIE_DATA, OUTPUT);
-        pinMode(NIXIE_LE, OUTPUT);
+        pinMode(NIXIE_LATCH, OUTPUT);
         pinMode(NIXIE_CLK, OUTPUT);
     }
 };

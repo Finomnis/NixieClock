@@ -15,6 +15,7 @@ void setup()
 {
     Serial.begin(115200);
     PINS.initializePins();
+    NixieDisplay.init();
     RealTimeClock.init();
     Dcf77.init();
 }
