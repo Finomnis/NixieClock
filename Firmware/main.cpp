@@ -6,6 +6,7 @@
 #include "NixieDisplay.h"
 #include "SineAnimation.h"
 #include "Settings.h"
+#include "DimAnimation.h"
 
 namespace
 {
@@ -185,6 +186,48 @@ void updateDisplay()
     else
     {
         renderLoadingBar();
+    }
+
+    if (Settings.DISPLAY_DIM_AT_NIGHT)
+    {
+        static bool currentlyDimmed = false;
+
+        uint16_t dayMinutes = currentTime.getMinutes() + 60L * currentTime.getHours();
+        bool shouldBeDimmed = (Settings.DISPLAY_DIM_START < Settings.DISPLAY_DIM_END)
+                                  ? (dayMinutes >= Settings.DISPLAY_DIM_START && dayMinutes < Settings.DISPLAY_DIM_END)
+                                  : (dayMinutes >= Settings.DISPLAY_DIM_START || dayMinutes < Settings.DISPLAY_DIM_END);
+
+        if (shouldBeDimmed != currentlyDimmed)
+        {
+            // Don't do anything for the first 5 seconds of the minute, as this could get interrupted by the dcf update
+            if (currentTime.getSeconds() > 5)
+            {
+                currentlyDimmed = shouldBeDimmed;
+                if (shouldBeDimmed)
+                {
+                    DimAnimation.start(255, Settings.DISPLAY_DIM_BRIGHTNESS, Settings.DISPLAY_DIM_ANIMATION_DURATION);
+                }
+                else
+                {
+                    DimAnimation.start(Settings.DISPLAY_DIM_BRIGHTNESS, 255, Settings.DISPLAY_DIM_ANIMATION_DURATION);
+                }
+            }
+        }
+        else
+        {
+            if (DimAnimation.isRunning())
+            {
+                DimAnimation.render();
+            }
+            else
+            {
+                NixieDisplay.setBrightness(shouldBeDimmed ? Settings.DISPLAY_DIM_BRIGHTNESS : 255);
+            }
+        }
+    }
+    else
+    {
+        NixieDisplay.setBrightness(255);
     }
 
     NixieDisplay.flush();
