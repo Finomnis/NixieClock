@@ -77,12 +77,13 @@ void RealTimeClock_t::init()
     }
 
     // Reset time to 'uninitialized'
-    RealTimeTimestamp uninitialized_time;
-    uninitialized_time.setUninitialized();
-    if (!DS3231.write(DS3231.REG_TIME, uninitialized_time.data, RealTimeTimestamp::DATA_LENGTH))
+    currentTime = RealTimeTimestamp();
+    currentTime.setUninitialized();
+    currentTimeValid = true;
+    timeValid = DS3231.write(DS3231.REG_TIME, currentTime.data, RealTimeTimestamp::DATA_LENGTH);
+    if (!timeValid)
     {
         Serial.println("Error: Unable to initialize time!");
-        return;
     }
 
     attachInterrupt(digitalPinToInterrupt(PINS.REAL_TIME_CLOCK_CHANGED), timeChangedHandler, FALLING);
