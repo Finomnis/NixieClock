@@ -97,7 +97,10 @@ struct RealTimeTimestamp
 
     inline bool isInitialized() const
     {
-        return (data[2] & 0b1000000) == 0 && (getYearLsd() != 0 || getYearMsd() != 0);
+        return (data[2] & 0b1000000) == 0 &&
+               (getYearLsd() != 0 ||
+                getYearMsd() != 0 ||
+                getCentury() != 0);
     }
 
     inline void setUninitialized()
