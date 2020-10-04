@@ -34,6 +34,15 @@ void NixieDisplay_t::setColon(bool on)
     content.colon = on;
 }
 
+void NixieDisplay_t::setBrightness(uint8_t value)
+{
+    if (brightness != value)
+    {
+        brightness = value;
+        analogWrite(PINS.NIXIE_DIM, brightness);
+    }
+}
+
 void NixieDisplay_t::clearDots()
 {
     content.dots = 0;

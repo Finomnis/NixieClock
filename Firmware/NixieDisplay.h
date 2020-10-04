@@ -19,6 +19,7 @@ public:
     void clearDots();
     void setDot(int8_t dotPos);
     void setDots(uint8_t dots);
+    void setBrightness(uint8_t value);
 
 private:
     void flushToSerial(const NixieDisplayContent &newFrame) const;
@@ -27,6 +28,7 @@ private:
 
 private:
     NixieDisplayContent content;
+    uint8_t brightness;
 };
 
 extern NixieDisplay_t NixieDisplay;
