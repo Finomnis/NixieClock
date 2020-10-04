@@ -2,6 +2,7 @@
 
 #include "InterruptsLock.h"
 #include "Pins.h"
+#include "Settings.h"
 
 NixieDisplay_t NixieDisplay;
 
@@ -71,7 +72,10 @@ void NixieDisplay_t::flush()
     currentlyShownFrame = newFrame;
 
     // Display on Serial Port
-    flushToSerial(newFrame);
+    if (Settings.DISPLAY_RENDER_TO_CONSOLE)
+    {
+        flushToSerial(newFrame);
+    }
 
     // Display on Nixie Tubes
     flushToShiftReg(newFrame);
