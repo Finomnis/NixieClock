@@ -144,12 +144,24 @@ void renderLoadingBar()
 void updateDisplay()
 {
     const auto &currentTime = RealTimeClock.getTime();
+
+    // Numbers
     if (RealTimeClock.isTimeValid() && currentTime.isInitialized())
     {
         NixieDisplay.setNumbers(currentTime.getHoursMsd(),
                                 currentTime.getHoursLsd(),
                                 currentTime.getMinutesMsd(),
                                 currentTime.getMinutesLsd());
+    }
+    else
+    {
+        NixieDisplay.setNumbers(-1, -1, -1, -1);
+    }
+
+    // Colon
+    if (RealTimeClock.isTimeValid() && currentTime.isInitialized() &&
+        (Dcf77.getLastStableSyncTime() + TIME_UNTIL_DCF_ANIMATION_SHOWS_AGAIN) > millis())
+    {
         if (Settings.COLON_BLINK_EVERY_SECOND)
         {
             NixieDisplay.setColon(currentTime.getSecondsLsd() % 2 == 0);
@@ -161,10 +173,10 @@ void updateDisplay()
     }
     else
     {
-        NixieDisplay.setNumbers(-1, -1, -1, -1);
         NixieDisplay.setColon(!digitalRead(PINS.DCF77));
     }
 
+    // Dots
     if (RealTimeClock.isTimeValid() && currentTime.isInitialized() &&
         (Dcf77.getLastStableSyncTime() + TIME_UNTIL_DCF_ANIMATION_SHOWS_AGAIN) > millis())
     {

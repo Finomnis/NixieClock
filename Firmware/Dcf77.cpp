@@ -184,7 +184,7 @@ void Dcf77_t::handleNewTimeData(const DcfTimeData &data)
         long previousSystemOffset = static_cast<long>(currentData.unixTime - currentData.systemTime / 1000);
         long offsetDifference = systemOffset - previousSystemOffset;
 
-        if (offsetDifference <= 2 && offsetDifference >= -2)
+        if (offsetDifference <= 10 && offsetDifference >= -10)
         {
             if (debugMessageVerbosity >= 1)
             {
