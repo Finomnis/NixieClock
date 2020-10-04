@@ -5,6 +5,7 @@
 #include "Pins.h"
 #include "NixieDisplay.h"
 #include "SineAnimation.h"
+#include "Settings.h"
 
 namespace
 {
@@ -48,9 +49,7 @@ void updateDcf()
         RealTimeTimestamp t = dcfTimeData.timestamp;
         t.secondsByte() = secondsOffset;
 
-        // Do a quick blink during waiting time, to show sync happened.
-
-        // TODO colon on
+        // Update display
         NixieDisplay.setColon(true);
         NixieDisplay.clearDots();
         NixieDisplay.setNumbers(t.getHoursMsd(),
@@ -59,23 +58,27 @@ void updateDcf()
                                 t.getMinutesLsd());
         NixieDisplay.flush();
 
-        // 200ms blink, starting at 400ms, ending at 600ms
-        while (millis() + 600 < syncTime)
+        // Do a quick blink during waiting time, to show sync happened.
+        if (Settings.COLON_BLINK_ON_SYNC)
         {
+            // 200ms blink, starting at 400ms, ending at 600ms
+            while (millis() + 600 < syncTime)
+            {
+            }
+
+            // Set colon off
+            NixieDisplay.setColon(false);
+            NixieDisplay.flush();
+
+            // End of 200ms blink
+            while (millis() + 400 < syncTime)
+            {
+            }
+
+            // Set colon on
+            NixieDisplay.setColon(true);
+            NixieDisplay.flush();
         }
-
-        // TODO colon off
-        NixieDisplay.setColon(false);
-        NixieDisplay.flush();
-
-        // End of 200ms blink
-        while (millis() + 400 < syncTime)
-        {
-        }
-
-        // TODO colon on
-        NixieDisplay.setColon(true);
-        NixieDisplay.flush();
 
         // Idle wait to sync point
         while (millis() < syncTime)
@@ -85,10 +88,6 @@ void updateDcf()
         // Sync
         RealTimeClock.setTime(t);
         //Serial.println("Synced!");
-
-        // TODO colon off
-        NixieDisplay.setColon(false);
-        NixieDisplay.flush();
     }
 }
 
@@ -151,7 +150,14 @@ void updateDisplay()
                                 currentTime.getHoursLsd(),
                                 currentTime.getMinutesMsd(),
                                 currentTime.getMinutesLsd());
-        NixieDisplay.setColon(currentTime.getSecondsLsd() % 2 == 0);
+        if (Settings.COLON_BLINK_EVERY_SECOND)
+        {
+            NixieDisplay.setColon(currentTime.getSecondsLsd() % 2 == 0);
+        }
+        else
+        {
+            NixieDisplay.setColon(true);
+        }
     }
     else
     {
