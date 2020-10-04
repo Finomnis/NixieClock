@@ -8,11 +8,6 @@
 #include "Settings.h"
 #include "DimAnimation.h"
 
-namespace
-{
-    constexpr unsigned long TIME_UNTIL_DCF_ANIMATION_SHOWS_AGAIN = 4L * 60L * 60L * 1000L; // Four Hours (from time zone change to morning)
-} // namespace
-
 void setup()
 {
     Serial.begin(115200);
@@ -161,7 +156,7 @@ void updateDisplay()
 
     // Colon
     if (RealTimeClock.isTimeValid() && currentTime.isInitialized() &&
-        (Dcf77.getLastStableSyncTime() + TIME_UNTIL_DCF_ANIMATION_SHOWS_AGAIN) > millis())
+        (Dcf77.getLastStableSyncTime() + Settings.TIME_UNTIL_DCF_ANIMATION_SHOWS_AGAIN) > millis())
     {
         if (Settings.COLON_BLINK_EVERY_SECOND)
         {
@@ -179,7 +174,7 @@ void updateDisplay()
 
     // Dots
     if (RealTimeClock.isTimeValid() && currentTime.isInitialized() &&
-        (Dcf77.getLastStableSyncTime() + TIME_UNTIL_DCF_ANIMATION_SHOWS_AGAIN) > millis())
+        (Dcf77.getLastStableSyncTime() + Settings.TIME_UNTIL_DCF_ANIMATION_SHOWS_AGAIN) > millis())
     {
         NixieDisplay.clearDots();
     }
