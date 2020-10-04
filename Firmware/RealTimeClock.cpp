@@ -5,6 +5,7 @@
 
 #include "Pins.h"
 #include "InterruptsLock.h"
+#include "Settings.h"
 
 namespace
 {
@@ -80,10 +81,17 @@ void RealTimeClock_t::init()
     currentTime = RealTimeTimestamp();
     currentTime.setUninitialized();
     currentTimeValid = true;
-    timeValid = DS3231.write(DS3231.REG_TIME, currentTime.data, RealTimeTimestamp::DATA_LENGTH);
-    if (!timeValid)
+    if (Settings.RESET_RTC_ON_STARTUP)
     {
-        Serial.println("Error: Unable to initialize time!");
+        timeValid = DS3231.write(DS3231.REG_TIME, currentTime.data, RealTimeTimestamp::DATA_LENGTH);
+        if (!timeValid)
+        {
+            Serial.println("Error: Unable to initialize time!");
+        }
+    }
+    else
+    {
+        timeValid = true;
     }
 
     attachInterrupt(digitalPinToInterrupt(PINS.REAL_TIME_CLOCK_CHANGED), timeChangedHandler, FALLING);
