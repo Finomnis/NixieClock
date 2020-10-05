@@ -188,9 +188,10 @@ void updateDisplay()
         static bool currentlyDimmed = false;
 
         uint16_t dayMinutes = currentTime.getMinutes() + 60L * currentTime.getHours();
-        bool shouldBeDimmed = (Settings.DISPLAY_DIM_START < Settings.DISPLAY_DIM_END)
-                                  ? (dayMinutes >= Settings.DISPLAY_DIM_START && dayMinutes < Settings.DISPLAY_DIM_END)
-                                  : (dayMinutes >= Settings.DISPLAY_DIM_START || dayMinutes < Settings.DISPLAY_DIM_END);
+        bool shouldBeDimmed = currentTime.isInitialized() &&
+                              ((Settings.DISPLAY_DIM_START < Settings.DISPLAY_DIM_END)
+                                   ? (dayMinutes >= Settings.DISPLAY_DIM_START && dayMinutes < Settings.DISPLAY_DIM_END)
+                                   : (dayMinutes >= Settings.DISPLAY_DIM_START || dayMinutes < Settings.DISPLAY_DIM_END));
 
         if (shouldBeDimmed != currentlyDimmed)
         {
