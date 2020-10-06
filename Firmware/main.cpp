@@ -174,7 +174,8 @@ void updateDisplay()
 
     // Dots
     if (RealTimeClock.isTimeValid() && currentTime.isInitialized() &&
-        (Dcf77.getLastStableSyncTime() + Settings.TIME_UNTIL_DCF_ANIMATION_SHOWS_AGAIN) > millis())
+        ((Dcf77.getLastStableSyncTime() + Settings.TIME_UNTIL_DCF_ANIMATION_SHOWS_AGAIN) > millis() ||
+         !Settings.SHOW_DCF_ANIMATION_AGAIN_AFTER_TIMEOUT))
     {
         NixieDisplay.clearDots();
     }

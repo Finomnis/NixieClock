@@ -9,6 +9,7 @@ struct Settings_t
     bool DISPLAY_RENDER_TO_CONSOLE = false;
     bool RESET_RTC_ON_STARTUP = false;
     unsigned long TIME_UNTIL_DCF_ANIMATION_SHOWS_AGAIN = 4L * 60L * 60L * 1000L; // Four Hours (from time zone change to morning)
+    bool SHOW_DCF_ANIMATION_AGAIN_AFTER_TIMEOUT = false;
 
     // Dimming
     bool DISPLAY_DIM_AT_NIGHT = true;
