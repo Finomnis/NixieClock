@@ -1072,7 +1072,7 @@
       (net 67 /NixieTubes/N4_2))
     (pad 45 smd rect (at 0 0 270) (size 3.4036 3.4036) (layers F.Cu F.Paste F.Mask)
       (net 1 GND))
-    (model ${KIPRJMOD}/Lib/2020-07-19_08-41-54/STEP/QFN44_7X7_MCH.step
+    (model ${KIPRJMOD}/Libraries/2020-07-19_08-41-54/STEP/QFN44_7X7_MCH.step
       (at (xyz 0 0 0))
       (scale (xyz 1 1 1))
       (rotate (xyz 0 0 0))
@@ -2160,7 +2160,7 @@
       (net 43 /NixieTubes/N2_2))
     (pad 45 smd rect (at 0 0 270) (size 3.4036 3.4036) (layers F.Cu F.Paste F.Mask)
       (net 1 GND))
-    (model ${KIPRJMOD}/Lib/2020-07-19_08-41-54/STEP/QFN44_7X7_MCH.step
+    (model ${KIPRJMOD}/Libraries/2020-07-19_08-41-54/STEP/QFN44_7X7_MCH.step
       (at (xyz 0 0 0))
       (scale (xyz 1 1 1))
       (rotate (xyz 0 0 0))
@@ -2349,7 +2349,7 @@
       (net 68 /NixieTubes/N4_1))
     (pad 0 thru_hole circle (at 5.0927 3.51536) (size 1.3462 1.3462) (drill 0.8382) (layers *.Cu *.Mask)
       (net 69 /NixieTubes/N4_0))
-    (model ${KIPRJMOD}/Lib/IN14-Model/NX-SZP-IN14-v01.STEP
+    (model ${KIPRJMOD}/Libraries/IN14-Model/NX-SZP-IN14-v01.STEP
       (offset (xyz 0 0 -32))
       (scale (xyz 1 1 1))
       (rotate (xyz 90 0 0))
@@ -2394,7 +2394,7 @@
       (net 56 /NixieTubes/N3_1))
     (pad 0 thru_hole circle (at 5.0927 3.51536) (size 1.3462 1.3462) (drill 0.8382) (layers *.Cu *.Mask)
       (net 57 /NixieTubes/N3_0))
-    (model ${KIPRJMOD}/Lib/IN14-Model/NX-SZP-IN14-v01.STEP
+    (model ${KIPRJMOD}/Libraries/IN14-Model/NX-SZP-IN14-v01.STEP
       (offset (xyz 0 0 -32))
       (scale (xyz 1 1 1))
       (rotate (xyz 90 0 0))
@@ -2439,7 +2439,7 @@
       (net 44 /NixieTubes/N2_1))
     (pad 0 thru_hole circle (at 5.0927 3.51536) (size 1.3462 1.3462) (drill 0.8382) (layers *.Cu *.Mask)
       (net 45 /NixieTubes/N2_0))
-    (model ${KIPRJMOD}/Lib/IN14-Model/NX-SZP-IN14-v01.STEP
+    (model ${KIPRJMOD}/Libraries/IN14-Model/NX-SZP-IN14-v01.STEP
       (offset (xyz 0 0 -32))
       (scale (xyz 1 1 1))
       (rotate (xyz 90 0 0))
@@ -2484,7 +2484,7 @@
       (net 32 /NixieTubes/N1_1))
     (pad 0 thru_hole circle (at 5.0927 3.51536) (size 1.3462 1.3462) (drill 0.8382) (layers *.Cu *.Mask)
       (net 33 /NixieTubes/N1_0))
-    (model ${KIPRJMOD}/Lib/IN14-Model/NX-SZP-IN14-v01.STEP
+    (model ${KIPRJMOD}/Libraries/IN14-Model/NX-SZP-IN14-v01.STEP
       (offset (xyz 0 0 -32))
       (scale (xyz 1 1 1))
       (rotate (xyz 90 0 0))
