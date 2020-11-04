@@ -17,6 +17,7 @@ public:
     inline int getHoursMsd() { return hoursMsd; }
     inline int getHoursLsd() { return hoursLsd; }
     inline int isInitialized() { return initialized; }
+    inline int isOutdated() { return outdated; }
 
 private:
     const char *expected = "\r\n$GPRMC,";
@@ -33,6 +34,9 @@ private:
     int secondsMsd = -1;
     int secondsLsd = -1;
     bool initialized = false;
+    bool outdated = true;
+
+    unsigned long last_sync = 0;
 };
 
 extern Nmea_t Nmea;

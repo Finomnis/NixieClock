@@ -32,7 +32,7 @@ void updateDisplay()
     NixieDisplay.setColon(Nmea.isInitialized());
 
     // Dots
-    if (Nmea.isInitialized())
+    if (Nmea.isInitialized() && !Nmea.isOutdated())
     {
         SineAnimation.setActive(false);
         NixieDisplay.clearDots();

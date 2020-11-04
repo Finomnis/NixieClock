@@ -3,6 +3,11 @@
 
 void Nmea_t::update()
 {
+    if (millis() - last_sync > 2000)
+    {
+        outdated = true;
+    }
+
     if (Serial.available())
     {
         int read = Serial.read();
@@ -53,6 +58,8 @@ void Nmea_t::processTimeUpdate()
     }
 
     initialized = true;
+    outdated = false;
+    last_sync = millis();
 }
 
 void Nmea_t::init() {}
