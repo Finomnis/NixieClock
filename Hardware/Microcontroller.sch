@@ -246,7 +246,7 @@ AR Path="/5F63C067/5F66ADDC" Ref="J?"  Part="1"
 AR Path="/5F645C82/5F66ADDC" Ref="J?"  Part="1" 
 F 0 "J3" H 8480 5092 50  0000 L CNN
 F 1 "NMEA" H 8480 5001 50  0000 L CNN
-F 2 "Connector_PinHeader_1.00mm:PinHeader_1x06_P1.00mm_Vertical" H 8400 5050 50  0001 C CNN
+F 2 "Connector_PinHeader_1.27mm:PinHeader_1x06_P1.27mm_Vertical" H 8400 5050 50  0001 C CNN
 F 3 "~" H 8400 5050 50  0001 C CNN
 	1    8400 5050
 	1    0    0    -1  
