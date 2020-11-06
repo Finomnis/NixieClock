@@ -273,18 +273,18 @@ Wire Wire Line
 $Comp
 L power:+5V #PWR?
 U 1 1 5F66ADEB
-P 7600 4700
+P 7950 4750
 AR Path="/5F8C807E/5F66ADEB" Ref="#PWR?"  Part="1" 
 AR Path="/5F66ADEB" Ref="#PWR?"  Part="1" 
 AR Path="/5F57C9A4/5F66ADEB" Ref="#PWR0118"  Part="1" 
 AR Path="/5F57DBA0/5F66ADEB" Ref="#PWR?"  Part="1" 
 AR Path="/5F63C067/5F66ADEB" Ref="#PWR?"  Part="1" 
 AR Path="/5F645C82/5F66ADEB" Ref="#PWR?"  Part="1" 
-F 0 "#PWR0118" H 7600 4550 50  0001 C CNN
-F 1 "+5V" V 7615 4828 50  0000 L CNN
-F 2 "" H 7600 4700 50  0001 C CNN
-F 3 "" H 7600 4700 50  0001 C CNN
-	1    7600 4700
+F 0 "#PWR0118" H 7950 4600 50  0001 C CNN
+F 1 "+5V" V 7965 4878 50  0000 L CNN
+F 2 "" H 7950 4750 50  0001 C CNN
+F 3 "" H 7950 4750 50  0001 C CNN
+	1    7950 4750
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -654,12 +654,12 @@ Wire Wire Line
 Connection ~ 4100 4450
 Text GLabel 1450 2600 0    50   Input ~ 0
 NMEA_SYNC
-Text GLabel 7450 5350 0    50   Input ~ 0
+Text GLabel 8150 5350 0    50   Input ~ 0
 NMEA_SYNC
-Text GLabel 7450 5150 0    50   Input ~ 0
+Text GLabel 7000 4900 0    50   Input ~ 0
 NMEA_RxD
 Wire Wire Line
-	8200 5350 7450 5350
+	8200 5350 8150 5350
 NoConn ~ 8200 4850
 $Comp
 L Device:R_Small R7
@@ -679,42 +679,103 @@ Wire Wire Line
 Wire Wire Line
 	7600 5250 8200 5250
 Wire Wire Line
-	7600 4700 7600 4800
-Wire Wire Line
-	7600 4800 7950 4800
-Wire Wire Line
 	8100 4800 8100 4950
 Wire Wire Line
 	7950 4850 7950 4800
-Connection ~ 7950 4800
 Wire Wire Line
 	7950 4800 8100 4800
 $Comp
 L Device:R_Small R6
 U 1 1 5FA77B0D
-P 7600 4950
+P 7100 4750
 AR Path="/5F57C9A4/5FA77B0D" Ref="R6"  Part="1" 
 AR Path="/5F63C067/5FA77B0D" Ref="R?"  Part="1" 
-F 0 "R6" V 7404 4950 50  0000 C CNN
-F 1 "100k" V 7495 4950 50  0000 C CNN
-F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 7600 4950 50  0001 C CNN
-F 3 "~" H 7600 4950 50  0001 C CNN
-	1    7600 4950
+F 0 "R6" V 6904 4750 50  0000 C CNN
+F 1 "10k" V 6995 4750 50  0000 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 7100 4750 50  0001 C CNN
+F 3 "~" H 7100 4750 50  0001 C CNN
+	1    7100 4750
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	7450 5150 7600 5150
-Wire Wire Line
-	7600 4800 7600 4850
-Connection ~ 7600 4800
-Wire Wire Line
-	7600 5050 7600 5150
-Connection ~ 7600 5150
-Wire Wire Line
-	7600 5150 8200 5150
 Wire Wire Line
 	7950 5050 8200 5050
 NoConn ~ 2750 2500
 NoConn ~ 2750 2400
 NoConn ~ 2750 1700
+$Comp
+L Transistor_BJT:S8050 Q1
+U 1 1 5FA6306F
+P 7200 5150
+F 0 "Q1" H 7391 5196 50  0000 L CNN
+F 1 "S8050" H 7391 5105 50  0000 L CNN
+F 2 "Package_TO_SOT_THT:TO-92_Inline" H 7400 5075 50  0001 L CIN
+F 3 "http://www.unisonic.com.tw/datasheet/S8050.pdf" H 7200 5150 50  0001 L CNN
+	1    7200 5150
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R8
+U 1 1 5FA67166
+P 7550 5150
+AR Path="/5F57C9A4/5FA67166" Ref="R8"  Part="1" 
+AR Path="/5F63C067/5FA67166" Ref="R?"  Part="1" 
+F 0 "R8" V 7354 5150 50  0000 C CNN
+F 1 "10k" V 7445 5150 50  0000 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 7550 5150 50  0001 C CNN
+F 3 "~" H 7550 5150 50  0001 C CNN
+	1    7550 5150
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	7100 4900 7000 4900
+$Comp
+L power:GND #PWR?
+U 1 1 5FA6D91E
+P 7100 5400
+AR Path="/5F8C807E/5FA6D91E" Ref="#PWR?"  Part="1" 
+AR Path="/5FA6D91E" Ref="#PWR?"  Part="1" 
+AR Path="/5F57C9A4/5FA6D91E" Ref="#PWR0115"  Part="1" 
+AR Path="/5F57DBA0/5FA6D91E" Ref="#PWR?"  Part="1" 
+AR Path="/5F63C067/5FA6D91E" Ref="#PWR?"  Part="1" 
+AR Path="/5F645C82/5FA6D91E" Ref="#PWR?"  Part="1" 
+F 0 "#PWR0115" H 7100 5150 50  0001 C CNN
+F 1 "GND" H 7105 5227 50  0000 C CNN
+F 2 "" H 7100 5400 50  0001 C CNN
+F 3 "" H 7100 5400 50  0001 C CNN
+	1    7100 5400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7650 5150 8200 5150
+Wire Wire Line
+	7450 5150 7400 5150
+Wire Wire Line
+	7100 4850 7100 4900
+$Comp
+L power:+5V #PWR?
+U 1 1 5FA89842
+P 7100 4600
+AR Path="/5F8C807E/5FA89842" Ref="#PWR?"  Part="1" 
+AR Path="/5FA89842" Ref="#PWR?"  Part="1" 
+AR Path="/5F57C9A4/5FA89842" Ref="#PWR?"  Part="1" 
+AR Path="/5F57DBA0/5FA89842" Ref="#PWR?"  Part="1" 
+AR Path="/5F63C067/5FA89842" Ref="#PWR?"  Part="1" 
+AR Path="/5F645C82/5FA89842" Ref="#PWR?"  Part="1" 
+F 0 "#PWR?" H 7100 4450 50  0001 C CNN
+F 1 "+5V" V 7115 4728 50  0000 L CNN
+F 2 "" H 7100 4600 50  0001 C CNN
+F 3 "" H 7100 4600 50  0001 C CNN
+	1    7100 4600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7100 4600 7100 4650
+Wire Wire Line
+	7950 4750 7950 4800
+Connection ~ 7950 4800
+Wire Wire Line
+	7100 5350 7100 5400
+Connection ~ 7100 4900
+Wire Wire Line
+	7100 4900 7100 4950
 $EndSCHEMATC
