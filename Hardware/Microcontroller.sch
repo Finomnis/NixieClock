@@ -159,7 +159,7 @@ AR Path="/5F57C9A4/5F64296A" Ref="J2"  Part="1"
 AR Path="/5F63C067/5F64296A" Ref="J?"  Part="1" 
 F 0 "J2" H 8480 4192 50  0000 L CNN
 F 1 "UART" H 8480 4101 50  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" H 8400 4150 50  0001 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 8400 4150 50  0001 C CNN
 F 3 "~" H 8400 4150 50  0001 C CNN
 	1    8400 4150
 	1    0    0    -1  
@@ -246,7 +246,7 @@ AR Path="/5F63C067/5F66ADDC" Ref="J?"  Part="1"
 AR Path="/5F645C82/5F66ADDC" Ref="J?"  Part="1" 
 F 0 "J3" H 8480 5092 50  0000 L CNN
 F 1 "NMEA" H 8480 5001 50  0000 L CNN
-F 2 "DCF77:ELV_DCF-2_91610" H 8400 5050 50  0001 C CNN
+F 2 "Connector_PinHeader_1.00mm:PinHeader_1x06_P1.00mm_Vertical" H 8400 5050 50  0001 C CNN
 F 3 "~" H 8400 5050 50  0001 C CNN
 	1    8400 5050
 	1    0    0    -1  
@@ -623,12 +623,12 @@ Wire Wire Line
 Wire Wire Line
 	5200 4350 5200 4450
 $Comp
-L Connector_Generic:Conn_01x03 J5
+L Connector_Generic:Conn_01x03 REG1
 U 1 1 5F7A5348
 P 10150 4500
-AR Path="/5F57C9A4/5F7A5348" Ref="J5"  Part="1" 
+AR Path="/5F57C9A4/5F7A5348" Ref="REG1"  Part="1" 
 AR Path="/5F63C067/5F7A5348" Ref="J?"  Part="1" 
-F 0 "J5" H 10230 4542 50  0000 L CNN
+F 0 "REG1" H 10230 4542 50  0000 L CNN
 F 1 "HVReg" H 10230 4451 50  0000 L CNN
 F 2 "Nixies:NCH8200HV" H 10150 4500 50  0001 C CNN
 F 3 "~" H 10150 4500 50  0001 C CNN
@@ -662,12 +662,12 @@ Wire Wire Line
 	8200 5350 7450 5350
 NoConn ~ 8200 4850
 $Comp
-L Device:R_Small R?
+L Device:R_Small R7
 U 1 1 5FA68E9C
 P 7950 4950
-AR Path="/5F57C9A4/5FA68E9C" Ref="R?"  Part="1" 
+AR Path="/5F57C9A4/5FA68E9C" Ref="R7"  Part="1" 
 AR Path="/5F63C067/5FA68E9C" Ref="R?"  Part="1" 
-F 0 "R?" V 7754 4950 50  0000 C CNN
+F 0 "R7" V 7754 4950 50  0000 C CNN
 F 1 "100k" V 7845 4950 50  0000 C CNN
 F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 7950 4950 50  0001 C CNN
 F 3 "~" H 7950 4950 50  0001 C CNN
@@ -690,12 +690,12 @@ Connection ~ 7950 4800
 Wire Wire Line
 	7950 4800 8100 4800
 $Comp
-L Device:R_Small R?
+L Device:R_Small R6
 U 1 1 5FA77B0D
 P 7600 4950
-AR Path="/5F57C9A4/5FA77B0D" Ref="R?"  Part="1" 
+AR Path="/5F57C9A4/5FA77B0D" Ref="R6"  Part="1" 
 AR Path="/5F63C067/5FA77B0D" Ref="R?"  Part="1" 
-F 0 "R?" V 7404 4950 50  0000 C CNN
+F 0 "R6" V 7404 4950 50  0000 C CNN
 F 1 "100k" V 7495 4950 50  0000 C CNN
 F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 7600 4950 50  0001 C CNN
 F 3 "~" H 7600 4950 50  0001 C CNN
