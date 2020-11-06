@@ -31,12 +31,6 @@ Wire Wire Line
 	1150 3700 950  3700
 Wire Wire Line
 	1150 3600 950  3600
-Wire Wire Line
-	1150 3500 950  3500
-Wire Wire Line
-	1150 3400 950  3400
-Wire Wire Line
-	950  3300 1150 3300
 Text GLabel 3500 4000 2    50   Input ~ 0
 NIX_LE
 Text GLabel 3500 3900 2    50   Input ~ 0
@@ -101,7 +95,7 @@ U 1 1 5F212F41
 P 650 7300
 F 0 "C1" H 742 7346 50  0000 L CNN
 F 1 "100n" H 742 7255 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 650 7300 50  0001 C CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 650 7300 50  0001 C CNN
 F 3 "~" H 650 7300 50  0001 C CNN
 	1    650  7300
 	1    0    0    -1  
@@ -112,7 +106,7 @@ U 1 1 5F214283
 P 1050 7300
 F 0 "C2" H 1142 7346 50  0000 L CNN
 F 1 "100n" H 1142 7255 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 1050 7300 50  0001 C CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 1050 7300 50  0001 C CNN
 F 3 "~" H 1050 7300 50  0001 C CNN
 	1    1050 7300
 	1    0    0    -1  
@@ -188,30 +182,24 @@ Wire Wire Line
 	3750 5400 7450 5400
 Wire Wire Line
 	6700 3900 7450 3900
-Text Label 1000 3300 0    50   ~ 0
-N1_4
-Text Label 1000 3400 0    50   ~ 0
-N1_5
-Text Label 1000 3500 0    50   ~ 0
-N1_6
 Text Label 1000 3600 0    50   ~ 0
-N1_7
+N2_L
 Text Label 1000 3700 0    50   ~ 0
-N1_8
+N2_R
 Text Label 1000 3800 0    50   ~ 0
-N1_9
+N2_1
 Text Label 1000 3900 0    50   ~ 0
-N1_0
+N2_0
 Text Label 1000 4000 0    50   ~ 0
-N1_R
+N2_2
 Text Label 1000 4100 0    50   ~ 0
-N1_L
+N2_9
 Text Label 1000 4200 0    50   ~ 0
-N1_1
+N2_3
 Text Label 1000 4300 0    50   ~ 0
-N1_2
+N2_8
 Text Label 1000 4400 0    50   ~ 0
-N1_3
+N2_4
 NoConn ~ 400  4550
 NoConn ~ 100  3600
 $Comp
@@ -225,10 +213,6 @@ F 3 "" H 1150 2700 60  0000 C CNN
 	1    1150 2700
 	1    0    0    -1  
 $EndComp
-Text Label 3500 3200 0    50   ~ 0
-N2_9
-Text Label 3500 3300 0    50   ~ 0
-N2_8
 $Comp
 L nixies-us:IN-14 N1
 U 1 1 5F163085
@@ -296,7 +280,7 @@ U 1 1 5F5BC5A3
 P 1950 1400
 F 0 "R1" V 1754 1400 50  0000 C CNN
 F 1 "10k" V 1845 1400 50  0000 C CNN
-F 2 "Resistor_SMD:R_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 1950 1400 50  0001 C CNN
+F 2 "Resistor_SMD:R_1206_3216Metric" H 1950 1400 50  0001 C CNN
 F 3 "~" H 1950 1400 50  0001 C CNN
 	1    1950 1400
 	0    1    1    0   
@@ -370,7 +354,7 @@ U 1 1 5F5C07AA
 P 3600 1400
 F 0 "R2" V 3404 1400 50  0000 C CNN
 F 1 "10k" V 3495 1400 50  0000 C CNN
-F 2 "Resistor_SMD:R_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 3600 1400 50  0001 C CNN
+F 2 "Resistor_SMD:R_1206_3216Metric" H 3600 1400 50  0001 C CNN
 F 3 "~" H 3600 1400 50  0001 C CNN
 	1    3600 1400
 	0    1    1    0   
@@ -444,7 +428,7 @@ U 1 1 5F5C7EC5
 P 5250 1400
 F 0 "R3" V 5054 1400 50  0000 C CNN
 F 1 "10k" V 5145 1400 50  0000 C CNN
-F 2 "Resistor_SMD:R_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 5250 1400 50  0001 C CNN
+F 2 "Resistor_SMD:R_1206_3216Metric" H 5250 1400 50  0001 C CNN
 F 3 "~" H 5250 1400 50  0001 C CNN
 	1    5250 1400
 	0    1    1    0   
@@ -518,33 +502,13 @@ U 1 1 5F5CF5D5
 P 6900 1400
 F 0 "R4" V 6704 1400 50  0000 C CNN
 F 1 "10k" V 6795 1400 50  0000 C CNN
-F 2 "Resistor_SMD:R_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 6900 1400 50  0001 C CNN
+F 2 "Resistor_SMD:R_1206_3216Metric" H 6900 1400 50  0001 C CNN
 F 3 "~" H 6900 1400 50  0001 C CNN
 	1    6900 1400
 	0    1    1    0   
 $EndComp
 Wire Wire Line
 	7000 1400 7050 1400
-Text Label 3700 3100 2    50   ~ 0
-N2_0
-Text Label 3700 3000 2    50   ~ 0
-N2_R
-Text Label 3700 2900 2    50   ~ 0
-N2_L
-Text Label 3700 2800 2    50   ~ 0
-N2_1
-Text Label 3700 2700 2    50   ~ 0
-N2_2
-Text Label 1000 2700 0    50   ~ 0
-N2_3
-Text Label 1000 2800 0    50   ~ 0
-N2_4
-Text Label 1000 2900 0    50   ~ 0
-N2_5
-Wire Wire Line
-	3350 3300 3750 3300
-Wire Wire Line
-	3350 3200 3750 3200
 Wire Wire Line
 	4500 4000 4300 4000
 Wire Wire Line
@@ -622,24 +586,6 @@ Wire Wire Line
 Wire Wire Line
 	6700 2800 7100 2800
 Wire Wire Line
-	1150 2900 950  2900
-Wire Wire Line
-	1150 2800 950  2800
-Wire Wire Line
-	1150 2700 950  2700
-Wire Wire Line
-	3350 2700 3750 2700
-Wire Wire Line
-	3350 2800 3750 2800
-Wire Wire Line
-	3350 2900 3750 2900
-Wire Wire Line
-	3350 3000 3750 3000
-Wire Wire Line
-	3350 3100 3750 3100
-NoConn ~ 1150 3200
-NoConn ~ 1150 4800
-Wire Wire Line
 	6700 3200 7100 3200
 Wire Wire Line
 	6700 3300 7100 3300
@@ -697,26 +643,13 @@ U 1 1 5F6FBFC0
 P 8350 1250
 F 0 "R10" V 8154 1250 50  0000 C CNN
 F 1 "100k" V 8245 1250 50  0000 C CNN
-F 2 "Resistor_SMD:R_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 8350 1250 50  0001 C CNN
+F 2 "Resistor_SMD:R_1206_3216Metric" H 8350 1250 50  0001 C CNN
 F 3 "~" H 8350 1250 50  0001 C CNN
 	1    8350 1250
 	0    -1   -1   0   
 $EndComp
 Wire Wire Line
 	8250 1250 8200 1250
-Text Label 3700 3400 2    50   ~ 0
-N_DOT
-Wire Wire Line
-	1150 3100 950  3100
-Wire Wire Line
-	1150 3000 950  3000
-Text Label 1000 3000 0    50   ~ 0
-N2_6
-Text Label 1000 3100 0    50   ~ 0
-N2_7
-NoConn ~ 3350 3600
-NoConn ~ 1150 4600
-NoConn ~ 1150 4700
 $Comp
 L HV_Shift_Register:HV5530 U2
 U 1 1 5F664441
@@ -740,10 +673,6 @@ NoConn ~ 6700 3600
 NoConn ~ 4500 3200
 NoConn ~ 4500 4500
 Wire Wire Line
-	3350 3400 3750 3400
-NoConn ~ 1150 4500
-NoConn ~ 3350 3500
-Wire Wire Line
 	3350 4100 3500 4100
 Wire Wire Line
 	3350 4800 3750 4800
@@ -757,4 +686,75 @@ Wire Wire Line
 NoConn ~ 6700 4800
 Wire Wire Line
 	6800 4200 6800 5000
+Wire Wire Line
+	1150 4500 950  4500
+Text Label 1000 4500 0    50   ~ 0
+N2_7
+Wire Wire Line
+	1150 4600 950  4600
+Text Label 1000 4600 0    50   ~ 0
+N2_5
+Wire Wire Line
+	1150 4700 950  4700
+Text Label 1000 4700 0    50   ~ 0
+N2_6
+Wire Wire Line
+	1150 4800 950  4800
+Text Label 1000 4800 0    50   ~ 0
+N_DOT
+Wire Wire Line
+	1150 3500 950  3500
+Wire Wire Line
+	1150 3400 950  3400
+Text Label 1000 3000 0    50   ~ 0
+N1_L
+Text Label 1000 3100 0    50   ~ 0
+N1_7
+Text Label 1000 3200 0    50   ~ 0
+N1_R
+Text Label 1000 3300 0    50   ~ 0
+N1_8
+Text Label 1000 3400 0    50   ~ 0
+N1_9
+Text Label 1000 3500 0    50   ~ 0
+N1_0
+Wire Wire Line
+	1150 3300 950  3300
+Wire Wire Line
+	1150 3200 950  3200
+Wire Wire Line
+	1150 3100 950  3100
+Wire Wire Line
+	1150 3000 950  3000
+Text Label 1000 2700 0    50   ~ 0
+N1_5
+Text Label 1000 2800 0    50   ~ 0
+N1_1
+Text Label 1000 2900 0    50   ~ 0
+N1_6
+Wire Wire Line
+	1150 2900 950  2900
+Wire Wire Line
+	1150 2800 950  2800
+Wire Wire Line
+	1150 2700 950  2700
+Text Label 3700 2700 2    50   ~ 0
+N1_2
+Text Label 3500 2800 0    50   ~ 0
+N1_4
+Text Label 3500 2900 0    50   ~ 0
+N1_3
+Wire Wire Line
+	3350 2900 3750 2900
+Wire Wire Line
+	3350 2800 3750 2800
+Wire Wire Line
+	3350 2700 3750 2700
+NoConn ~ 3350 3000
+NoConn ~ 3350 3100
+NoConn ~ 3350 3200
+NoConn ~ 3350 3300
+NoConn ~ 3350 3400
+NoConn ~ 3350 3500
+NoConn ~ 3350 3600
 $EndSCHEMATC
