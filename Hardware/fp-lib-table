@@ -1,6 +1,3 @@
 (fp_lib_table
-  (lib (name nixies-us)(type Legacy)(uri ${KIPRJMOD}/Libraries/Eagle-and-KiCAD-Nixie-Libs-master/nixies-us.mod)(options "")(descr ""))
-  (lib (name hv5623)(type KiCad)(uri ${KIPRJMOD}/Libraries/2020-07-19_08-41-54/footprints.pretty)(options "")(descr ""))
-  (lib (name Nixies-old)(type KiCad)(uri ${KIPRJMOD}/Libraries/Eagle-and-KiCAD-Nixie-Libs-master/Nixies.pretty)(options "")(descr ""))
   (lib (name Nixies)(type KiCad)(uri ${KIPRJMOD}/Libraries/Nixies/Nixies.pretty)(options "")(descr ""))
 )

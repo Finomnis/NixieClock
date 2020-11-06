@@ -1,6 +1,4 @@
 (sym_lib_table
-  (lib (name 2020-07-19_08-41-54)(type Legacy)(uri ${KIPRJMOD}/Libraries/2020-07-19_08-41-54/2020-07-19_08-41-54.lib)(options "")(descr ""))
-  (lib (name nixies-us)(type Legacy)(uri ${KIPRJMOD}/Libraries/Eagle-and-KiCAD-Nixie-Libs-master/nixies-us.lib)(options "")(descr ""))
-  (lib (name HV5623K7-G)(type Legacy)(uri ${KIPRJMOD}/Libraries/HV5623K7-G/HV5623K7-G.lib)(options "")(descr ""))
+  (lib (name nixies-us)(type Legacy)(uri ${KIPRJMOD}/Libraries/Nixies/nixies-us.lib)(options "")(descr ""))
   (lib (name HV_Shift_Register)(type Legacy)(uri ${KIPRJMOD}/Libraries/HV-Shift-Register/HV_Shift_Register.lib)(options "")(descr ""))
 )
