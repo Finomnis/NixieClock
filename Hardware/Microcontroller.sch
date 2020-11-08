@@ -549,7 +549,6 @@ F 3 "" H 9600 3700 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 NoConn ~ 2750 2800
-NoConn ~ 2750 1900
 NoConn ~ 2750 1800
 NoConn ~ 1550 2700
 NoConn ~ 1550 2500
@@ -765,4 +764,82 @@ F 3 "http://www.st.com/content/ccc/resource/technical/document/datasheet/c4/0e/7
 $EndComp
 Wire Wire Line
 	9750 4500 9950 4500
+Text GLabel 2850 2000 2    50   Input ~ 0
+NIX_DIM
+Text GLabel 2850 1900 2    50   Input ~ 0
+TIME_ZONE
+Wire Wire Line
+	2750 1900 2850 1900
+$Comp
+L Connector_Generic:Conn_01x02 J?
+U 1 1 5FB947CD
+P 8400 2650
+AR Path="/5F57C9A4/5FB947CD" Ref="J?"  Part="1" 
+AR Path="/5F63C067/5FB947CD" Ref="J?"  Part="1" 
+F 0 "J?" H 8480 2642 50  0000 L CNN
+F 1 "TIME_ZONE" H 8480 2551 50  0000 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 8400 2650 50  0001 C CNN
+F 3 "~" H 8400 2650 50  0001 C CNN
+	1    8400 2650
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5FB947E7
+P 8000 2750
+AR Path="/5F8C807E/5FB947E7" Ref="#PWR?"  Part="1" 
+AR Path="/5FB947E7" Ref="#PWR?"  Part="1" 
+AR Path="/5F57C9A4/5FB947E7" Ref="#PWR?"  Part="1" 
+AR Path="/5F57DBA0/5FB947E7" Ref="#PWR?"  Part="1" 
+AR Path="/5F63C067/5FB947E7" Ref="#PWR?"  Part="1" 
+F 0 "#PWR?" H 8000 2500 50  0001 C CNN
+F 1 "GND" H 8005 2577 50  0000 C CNN
+F 2 "" H 8000 2750 50  0001 C CNN
+F 3 "" H 8000 2750 50  0001 C CNN
+	1    8000 2750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8200 2750 8000 2750
+$Comp
+L Device:R_Small R?
+U 1 1 5FB947F3
+P 8000 2400
+AR Path="/5F57C9A4/5FB947F3" Ref="R?"  Part="1" 
+AR Path="/5F63C067/5FB947F3" Ref="R?"  Part="1" 
+F 0 "R?" V 7804 2400 50  0000 C CNN
+F 1 "100k" V 7895 2400 50  0000 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric" H 8000 2400 50  0001 C CNN
+F 3 "~" H 8000 2400 50  0001 C CNN
+	1    8000 2400
+	-1   0    0    1   
+$EndComp
+Text GLabel 7850 2650 0    50   Input ~ 0
+TIME_ZONE
+Wire Wire Line
+	7850 2650 8000 2650
+Wire Wire Line
+	8000 2500 8000 2650
+Connection ~ 8000 2650
+Wire Wire Line
+	8000 2650 8200 2650
+$Comp
+L power:+5V #PWR?
+U 1 1 5FB9E23E
+P 8000 2250
+AR Path="/5F8C807E/5FB9E23E" Ref="#PWR?"  Part="1" 
+AR Path="/5FB9E23E" Ref="#PWR?"  Part="1" 
+AR Path="/5F57C9A4/5FB9E23E" Ref="#PWR?"  Part="1" 
+AR Path="/5F57DBA0/5FB9E23E" Ref="#PWR?"  Part="1" 
+AR Path="/5F63C067/5FB9E23E" Ref="#PWR?"  Part="1" 
+AR Path="/5F645C82/5FB9E23E" Ref="#PWR?"  Part="1" 
+F 0 "#PWR?" H 8000 2100 50  0001 C CNN
+F 1 "+5V" V 8015 2378 50  0000 L CNN
+F 2 "" H 8000 2250 50  0001 C CNN
+F 3 "" H 8000 2250 50  0001 C CNN
+	1    8000 2250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8000 2300 8000 2250
 $EndSCHEMATC
