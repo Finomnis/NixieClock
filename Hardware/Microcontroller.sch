@@ -440,10 +440,8 @@ F 3 "" H 9950 4350 50  0001 C CNN
 	1    9950 4350
 	1    0    0    -1  
 $EndComp
-Text GLabel 9550 4500 0    50   Input ~ 0
+Text GLabel 9750 4500 0    50   Input ~ 0
 170V
-Wire Wire Line
-	9650 4500 9550 4500
 Wire Wire Line
 	9950 4600 9950 4650
 $Comp
@@ -592,21 +590,8 @@ $EndComp
 Wire Wire Line
 	9950 3650 9950 3700
 Connection ~ 9950 3650
-$Comp
-L Device:Fuse_Small F1
-U 1 1 5FA2D98C
-P 9750 4500
-F 0 "F1" H 9750 4685 50  0000 C CNN
-F 1 "200mA" H 9750 4594 50  0000 C CNN
-F 2 "Fuse:Fuse_2512_6332Metric" H 9750 4500 50  0001 C CNN
-F 3 "~" H 9750 4500 50  0001 C CNN
-	1    9750 4500
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	9950 4400 9950 4350
-Wire Wire Line
-	9850 4500 9950 4500
 Wire Wire Line
 	5200 4350 5200 4450
 $Comp
@@ -764,18 +749,20 @@ Wire Wire Line
 Connection ~ 7100 4900
 Wire Wire Line
 	7100 4900 7100 4950
-$Comp
-L Regulator_Linear:AMS1117-5.0 U5
-U 1 1 5FA81909
-P 4650 4450
-F 0 "U5" H 4650 4692 50  0000 C CNN
-F 1 "AMS1117-5.0" H 4650 4601 50  0000 C CNN
-F 2 "Package_TO_SOT_SMD:SOT-223-3_TabPin2" H 4650 4650 50  0001 C CNN
-F 3 "http://www.advanced-monolithic.com/pdf/ds1117.pdf" H 4750 4200 50  0001 C CNN
-	1    4650 4450
-	1    0    0    -1  
-$EndComp
 Connection ~ 4100 4450
 Wire Wire Line
 	4100 4450 4350 4450
+$Comp
+L Regulator_Linear:LF50_TO252 U4
+U 1 1 5FA94124
+P 4650 4450
+F 0 "U4" H 4650 4692 50  0000 C CNN
+F 1 "L78M05ABDT-TR" H 4650 4601 50  0000 C CNN
+F 2 "Package_TO_SOT_SMD:TO-252-2" H 4650 4675 50  0001 C CIN
+F 3 "http://www.st.com/content/ccc/resource/technical/document/datasheet/c4/0e/7e/2a/be/bc/4c/bd/CD00000546.pdf/files/CD00000546.pdf/jcr:content/translations/en.CD00000546.pdf" H 4650 4400 50  0001 C CNN
+	1    4650 4450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9750 4500 9950 4500
 $EndSCHEMATC
