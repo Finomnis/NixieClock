@@ -43,14 +43,21 @@ void Nmea_t::update()
 
 void Nmea_t::processTimeUpdate()
 {
-    hoursMsd = buffer[9] - '0';
-    hoursLsd = buffer[10] - '0';
+    hoursLsd = buffer[9] - '0';
+    hoursLsd *= 10;
+    hoursLsd += buffer[10] - '0';
     minutesMsd = buffer[11] - '0';
     minutesLsd = buffer[12] - '0';
     secondsMsd = buffer[13] - '0';
     secondsLsd = buffer[14] - '0';
 
     hoursLsd += Settings.TIMEZONE;
+    while (hoursLsd >= 24)
+    {
+        hoursLsd -= 24;
+    }
+
+    hoursMsd = 0;
     while (hoursLsd >= 10)
     {
         hoursLsd -= 10;
