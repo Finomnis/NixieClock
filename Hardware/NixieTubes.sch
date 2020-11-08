@@ -507,96 +507,20 @@ F 3 "~" H 6900 1400 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	7000 1400 7050 1400
-Wire Wire Line
-	4500 4000 4300 4000
-Wire Wire Line
-	4500 3900 4300 3900
-Wire Wire Line
-	4500 3800 4300 3800
-Wire Wire Line
-	4500 3700 4300 3700
-Wire Wire Line
-	4500 3600 4300 3600
-Wire Wire Line
-	4500 3500 4300 3500
-Wire Wire Line
-	4500 3400 4300 3400
-Wire Wire Line
-	4500 3300 4300 3300
-Wire Wire Line
-	4500 4400 4300 4400
-Wire Wire Line
-	4500 4300 4300 4300
-Wire Wire Line
-	4500 4200 4300 4200
-Wire Wire Line
-	4300 4100 4500 4100
-Text Label 4350 4100 0    50   ~ 0
-N3_L
-Text Label 4350 4200 0    50   ~ 0
-N3_1
-Text Label 4350 4300 0    50   ~ 0
-N3_2
-Text Label 4350 4400 0    50   ~ 0
-N3_3
-Text Label 4350 3300 0    50   ~ 0
-N3_4
-Text Label 4350 3400 0    50   ~ 0
-N3_5
-Text Label 4350 3500 0    50   ~ 0
-N3_6
-Text Label 4350 3600 0    50   ~ 0
-N3_7
-Text Label 4350 3700 0    50   ~ 0
-N3_8
-Text Label 4350 3800 0    50   ~ 0
-N3_9
-Text Label 4350 3900 0    50   ~ 0
-N3_0
-Text Label 4350 4000 0    50   ~ 0
-N3_R
 Text Label 7050 2700 2    50   ~ 0
-N4_2
-Text Label 4350 2700 0    50   ~ 0
-N4_3
-Text Label 4350 2800 0    50   ~ 0
-N4_4
-Text Label 4350 2900 0    50   ~ 0
-N4_5
-Text Label 4350 3000 0    50   ~ 0
-N4_6
-Text Label 4350 3100 0    50   ~ 0
-N4_7
+N3_0
 Text Label 7050 3300 2    50   ~ 0
-N4_8
+N3_7
 Text Label 7050 3200 2    50   ~ 0
-N4_9
+N3_3
 Text Label 7050 3100 2    50   ~ 0
-N4_0
+N3_8
 Text Label 7050 3000 2    50   ~ 0
-N4_R
-Text Label 6850 2800 0    50   ~ 0
-N4_1
-Text Label 6850 2900 0    50   ~ 0
-N4_L
-Wire Wire Line
-	6700 2900 7100 2900
-Wire Wire Line
-	6700 2800 7100 2800
+N3_2
 Wire Wire Line
 	6700 3200 7100 3200
 Wire Wire Line
 	6700 3300 7100 3300
-Wire Wire Line
-	4500 3100 4300 3100
-Wire Wire Line
-	4500 3000 4300 3000
-Wire Wire Line
-	4500 2900 4300 2900
-Wire Wire Line
-	4500 2800 4300 2800
-Wire Wire Line
-	4500 2700 4300 2700
 Wire Wire Line
 	6700 2700 7100 2700
 $Comp
@@ -666,9 +590,6 @@ Wire Wire Line
 	6700 3100 7100 3100
 Wire Wire Line
 	6700 3000 7100 3000
-NoConn ~ 6700 3500
-NoConn ~ 6700 3600
-NoConn ~ 4500 3200
 NoConn ~ 4500 4500
 Wire Wire Line
 	3350 4100 3500 4100
@@ -678,7 +599,6 @@ Wire Wire Line
 	3450 4200 3450 5000
 Wire Wire Line
 	3750 4800 3750 5400
-NoConn ~ 6700 3400
 Wire Wire Line
 	7450 3900 7450 5400
 NoConn ~ 6700 4800
@@ -755,4 +675,80 @@ NoConn ~ 3350 3300
 NoConn ~ 3350 3400
 NoConn ~ 3350 3500
 NoConn ~ 3350 3600
+Text Label 7050 3600 2    50   ~ 0
+N3_5
+Text Label 7050 3500 2    50   ~ 0
+N3_6
+Wire Wire Line
+	6700 3500 7100 3500
+Wire Wire Line
+	6700 3600 7100 3600
+Text Label 7050 3400 2    50   ~ 0
+N3_4
+Wire Wire Line
+	6700 3400 7100 3400
+Text Label 7050 2900 2    50   ~ 0
+N3_9
+Text Label 7050 2800 2    50   ~ 0
+N3_1
+Wire Wire Line
+	6700 2900 7100 2900
+Wire Wire Line
+	6700 2800 7100 2800
+Wire Wire Line
+	4500 3700 4300 3700
+Wire Wire Line
+	4500 3600 4300 3600
+Text Label 4350 3600 0    50   ~ 0
+N4_0
+Text Label 4350 3700 0    50   ~ 0
+N4_6
+Wire Wire Line
+	4500 3500 4300 3500
+Wire Wire Line
+	4500 3400 4300 3400
+Text Label 4350 3000 0    50   ~ 0
+N4_2
+Text Label 4350 3100 0    50   ~ 0
+N4_3
+Text Label 4350 3200 0    50   ~ 0
+N4_L
+Text Label 4350 3300 0    50   ~ 0
+N4_4
+Text Label 4350 3400 0    50   ~ 0
+N4_R
+Text Label 4350 3500 0    50   ~ 0
+N4_5
+Wire Wire Line
+	4500 3300 4300 3300
+Wire Wire Line
+	4500 3200 4300 3200
+Wire Wire Line
+	4500 3100 4300 3100
+Wire Wire Line
+	4500 3000 4300 3000
+Text Label 4350 2700 0    50   ~ 0
+N3_L
+Text Label 4350 2800 0    50   ~ 0
+N3_R
+Text Label 4350 2900 0    50   ~ 0
+N4_1
+Wire Wire Line
+	4500 2900 4300 2900
+Wire Wire Line
+	4500 2800 4300 2800
+Wire Wire Line
+	4500 2700 4300 2700
+Wire Wire Line
+	4500 4000 4300 4000
+Wire Wire Line
+	4500 3900 4300 3900
+Text Label 4350 3900 0    50   ~ 0
+N4_7
+Text Label 4350 4000 0    50   ~ 0
+N4_8
+Wire Wire Line
+	4500 3800 4300 3800
+Text Label 4350 3800 0    50   ~ 0
+N4_9
 $EndSCHEMATC
