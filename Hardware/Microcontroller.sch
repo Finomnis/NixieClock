@@ -288,17 +288,6 @@ F 3 "" H 7950 4750 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Regulator_Linear:L78L05_SOT89 U4
-U 1 1 5F682BAE
-P 4650 4450
-F 0 "U4" H 4650 4692 50  0000 C CNN
-F 1 "L78L05_SOT89" H 4650 4601 50  0000 C CNN
-F 2 "Package_TO_SOT_SMD:SOT-89-3" H 4650 4650 50  0001 C CIN
-F 3 "http://www.st.com/content/ccc/resource/technical/document/datasheet/15/55/e5/aa/23/5b/43/fd/CD00000446.pdf/files/CD00000446.pdf/jcr:content/translations/en.CD00000446.pdf" H 4650 4400 50  0001 C CNN
-	1    4650 4450
-	1    0    0    -1  
-$EndComp
-$Comp
 L Device:C_Small C6
 U 1 1 5F68340D
 P 4100 4750
@@ -342,8 +331,6 @@ Wire Wire Line
 	5200 4450 4950 4450
 Wire Wire Line
 	4100 4650 4100 4450
-Wire Wire Line
-	4100 4450 4350 4450
 Wire Wire Line
 	3400 4350 3400 4450
 Connection ~ 5200 4450
@@ -651,7 +638,6 @@ Wire Wire Line
 	3400 4450 3650 4450
 Wire Wire Line
 	3850 4450 4100 4450
-Connection ~ 4100 4450
 Text GLabel 1450 2600 0    50   Input ~ 0
 NMEA_SYNC
 Text GLabel 8150 5350 0    50   Input ~ 0
@@ -778,4 +764,18 @@ Wire Wire Line
 Connection ~ 7100 4900
 Wire Wire Line
 	7100 4900 7100 4950
+$Comp
+L Regulator_Linear:AMS1117-5.0 U5
+U 1 1 5FA81909
+P 4650 4450
+F 0 "U5" H 4650 4692 50  0000 C CNN
+F 1 "AMS1117-5.0" H 4650 4601 50  0000 C CNN
+F 2 "Package_TO_SOT_SMD:SOT-223-3_TabPin2" H 4650 4650 50  0001 C CNN
+F 3 "http://www.advanced-monolithic.com/pdf/ds1117.pdf" H 4750 4200 50  0001 C CNN
+	1    4650 4450
+	1    0    0    -1  
+$EndComp
+Connection ~ 4100 4450
+Wire Wire Line
+	4100 4450 4350 4450
 $EndSCHEMATC

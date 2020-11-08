@@ -200,8 +200,6 @@ Text Label 1000 4300 0    50   ~ 0
 N2_8
 Text Label 1000 4400 0    50   ~ 0
 N2_4
-NoConn ~ 400  4550
-NoConn ~ 100  3600
 $Comp
 L HV_Shift_Register:HV5530 U1
 U 1 1 5F15D56D
