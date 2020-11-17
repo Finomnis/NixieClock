@@ -16,8 +16,8 @@ void NixieDisplay_t::init()
     // Set initial pin values.
     // Clock needs to be low, to set the correct clock phase.
     // Latch needs to be high to let data through. Will get set to low when setting data.
-    digitalWrite(PINS.NIXIE_CLK, LOW);
-    digitalWrite(PINS.NIXIE_LATCH, HIGH);
+    digitalWrite(PINS.NIXIE_CLK, HIGH);
+    digitalWrite(PINS.NIXIE_LATCH, LOW);
     analogWrite(PINS.NIXIE_DIM, 255);
 }
 
@@ -92,7 +92,6 @@ void NixieDisplay_t::flush()
 
 void NixieDisplay_t::writeValuesToShiftRegister(long value1, long value2) const
 {
-    digitalWrite(PINS.NIXIE_LATCH, LOW);
 
     shiftOut(PINS.NIXIE_DATA, PINS.NIXIE_CLK, LSBFIRST, value2 & 255);
     value2 = value2 >> 8;
@@ -111,6 +110,7 @@ void NixieDisplay_t::writeValuesToShiftRegister(long value1, long value2) const
     shiftOut(PINS.NIXIE_DATA, PINS.NIXIE_CLK, LSBFIRST, value1 & 255);
 
     digitalWrite(PINS.NIXIE_LATCH, HIGH);
+    digitalWrite(PINS.NIXIE_LATCH, LOW);
 }
 
 static inline void setOutput(long &value, uint8_t bitId)
