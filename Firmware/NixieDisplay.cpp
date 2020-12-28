@@ -113,17 +113,21 @@ void NixieDisplay_t::writeValuesToShiftRegister(long value1, long value2) const
     digitalWrite(PINS.NIXIE_LATCH, LOW);
 }
 
-static inline void setOutput(long &value, uint8_t bitId)
+static inline void setBit(long &value, uint8_t bitId)
 {
-    value |= (1 << (32 - bitId));
+    value |= (1L << bitId);
 }
 
 static inline void renderNumber(long &data, const uint8_t *pinMappings, int8_t value)
 {
     if (value < 0 || value > 9)
+    {
+        // Default to '8' because nixies always have to display something the way we control them.
+        // Otherwise the left or right dot in the nixie tube could over-current.
         value = 8;
+    }
 
-    data |= (1L << (pinMappings[value] - 1));
+    setBit(data, pinMappings[value] - 1);
 }
 
 static inline void renderDot(long &data, const uint8_t *pinMappings, uint8_t dotsData, uint8_t dotId)
@@ -131,7 +135,7 @@ static inline void renderDot(long &data, const uint8_t *pinMappings, uint8_t dot
     if ((dotsData & (1 << dotId)) == 0)
         return;
 
-    data |= (1L << (pinMappings[dotId] - 1));
+    setBit(data, pinMappings[dotId] - 1);
 }
 
 void NixieDisplay_t::flushToShiftReg(const NixieDisplayContent &newFrame) const
