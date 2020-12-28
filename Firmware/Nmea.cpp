@@ -1,5 +1,6 @@
 #include "Nmea.h"
 #include "Settings.h"
+#include "Pins.h"
 
 void Nmea_t::update()
 {
@@ -51,7 +52,16 @@ void Nmea_t::processTimeUpdate()
     secondsMsd = buffer[13] - '0';
     secondsLsd = buffer[14] - '0';
 
-    hoursLsd += Settings.TIMEZONE;
+    int timezone_switch = digitalRead(PINS.TIME_ZONE);
+    if (timezone_switch)
+    {
+        hoursLsd += Settings.TIMEZONE_0;
+    }
+    else
+    {
+        hoursLsd += Settings.TIMEZONE_1;
+    }
+
     while (hoursLsd >= 24)
     {
         hoursLsd -= 24;

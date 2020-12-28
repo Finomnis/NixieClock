@@ -19,7 +19,8 @@ struct Settings_t
     unsigned long DISPLAY_DIM_ANIMATION_DURATION = 40000;
 
     // Timezone
-    int TIMEZONE = 1;
+    int TIMEZONE_0 = 1;
+    int TIMEZONE_1 = 2;
 };
 
 extern const Settings_t Settings;
