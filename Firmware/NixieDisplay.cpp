@@ -121,9 +121,9 @@ static inline void setOutput(long &value, uint8_t bitId)
 static inline void renderNumber(long &data, const uint8_t *pinMappings, int8_t value)
 {
     if (value < 0 || value > 9)
-        return;
+        value = 8;
 
-    data |= (1L << (32 - pinMappings[value]));
+    data |= (1L << (pinMappings[value] - 1));
 }
 
 static inline void renderDot(long &data, const uint8_t *pinMappings, uint8_t dotsData, uint8_t dotId)
@@ -131,7 +131,7 @@ static inline void renderDot(long &data, const uint8_t *pinMappings, uint8_t dot
     if ((dotsData & (1 << dotId)) == 0)
         return;
 
-    data |= (1L << (32 - pinMappings[dotId]));
+    data |= (1L << (pinMappings[dotId] - 1));
 }
 
 void NixieDisplay_t::flushToShiftReg(const NixieDisplayContent &newFrame) const
@@ -139,12 +139,12 @@ void NixieDisplay_t::flushToShiftReg(const NixieDisplayContent &newFrame) const
     long data1 = 0;
     long data2 = 0;
 
-    constexpr uint8_t PIN_MAPPING_N1[] = {10, 7, 6, 5, 16, 15, 14, 13, 12, 11};
-    constexpr uint8_t PIN_MAPPING_N2[] = {27, 24, 23, 22, 21, 20, 19, 18, 29, 28};
-    constexpr uint8_t PIN_MAPPING_N3[] = {10, 7, 6, 5, 16, 15, 14, 13, 12, 11};
-    constexpr uint8_t PIN_MAPPING_N4[] = {27, 24, 23, 22, 21, 20, 19, 18, 29, 28};
-    constexpr uint8_t PIN_MAPPING_DOTS[] = {8, 9, 25, 26, 8, 9, 25, 26};
-    constexpr long COLON_PIN = 0x4;
+    constexpr uint8_t PIN_MAPPING_N1[] = {14, 21, 23, 25, 24, 22, 20, 18, 16, 15};
+    constexpr uint8_t PIN_MAPPING_N2[] = {10, 11, 9, 7, 5, 3, 2, 4, 6, 8};
+    constexpr uint8_t PIN_MAPPING_N3[] = {23, 24, 26, 28, 30, 32, 31, 29, 27, 25};
+    constexpr uint8_t PIN_MAPPING_N4[] = {13, 20, 19, 18, 16, 14, 12, 10, 9, 11};
+    constexpr uint8_t PIN_MAPPING_DOTS[] = {19, 17, 13, 12, 22, 21, 17, 15};
+    constexpr long COLON_PIN = 0x1;
 
     if (newFrame.colon)
     {
