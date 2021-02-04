@@ -20,6 +20,10 @@ struct PINS_t
         pinMode(NIXIE_CLK, OUTPUT);
         pinMode(TIME_ZONE, INPUT);
         pinMode(NMEA_SYNC, INPUT);
+
+        // Set PWM frequency
+        constexpr int TCA = 0x0A00;
+        *((char *)TCA) = 0b00001101;
     }
 };
 
