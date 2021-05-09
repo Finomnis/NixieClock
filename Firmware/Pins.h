@@ -23,7 +23,7 @@ struct PINS_t
 
         // Set PWM frequency
         constexpr int TCA = 0x0A00;
-        *((char *)TCA) = 0b00001101;
+        *((char *)TCA) = 0b00001111;
     }
 };
 
