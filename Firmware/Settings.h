@@ -14,7 +14,7 @@ struct Settings_t
     // Dimming
     bool DISPLAY_DIM_AT_NIGHT = true;
     uint8_t DISPLAY_DIM_BRIGHTNESS = 20;
-    uint16_t DISPLAY_DIM_START = 23 * 60;
+    uint16_t DISPLAY_DIM_START = 22 * 60;
     uint16_t DISPLAY_DIM_END = 7 * 60;
     unsigned long DISPLAY_DIM_ANIMATION_DURATION = 40000;
 
