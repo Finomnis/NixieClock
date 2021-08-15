@@ -1,5 +1,0 @@
-Flash with Arduino IDE.
-
-MegaTinyCore - Attiny 1606
-20MHz
-millis/micros from TCB0 (important, as otherwise this would interfer with the PWM dimming)
