@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name PA1010D)(type Legacy)(uri ${KIPRJMOD}/lib/PA1010D.lib)(options "")(descr ""))
+)
