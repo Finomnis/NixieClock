@@ -14,34 +14,34 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L PA1010D:PA1010D U?
+L PA1010D:PA1010D U1
 U 1 1 61903BE1
 P 5000 3450
-F 0 "U?" H 5525 3715 50  0000 C CNN
+F 0 "U1" H 5525 3715 50  0000 C CNN
 F 1 "PA1010D" H 5525 3624 50  0000 C CNN
-F 2 "" H 5000 3700 50  0001 C CNN
+F 2 "PA1010D:PA1010D" H 5000 3700 50  0001 C CNN
 F 3 "" H 5000 3700 50  0001 C CNN
 	1    5000 3450
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector_Generic:Conn_01x05 J?
+L Connector_Generic:Conn_01x05 J1
 U 1 1 61904C5E
 P 4600 3650
-F 0 "J?" H 4518 4067 50  0000 C CNN
+F 0 "J1" H 4518 4067 50  0000 C CNN
 F 1 "Conn_01x05" H 4518 3976 50  0000 C CNN
-F 2 "" H 4600 3650 50  0001 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical" H 4600 3650 50  0001 C CNN
 F 3 "~" H 4600 3650 50  0001 C CNN
 	1    4600 3650
 	-1   0    0    -1  
 $EndComp
 $Comp
-L Connector_Generic:Conn_01x05 J?
+L Connector_Generic:Conn_01x05 J2
 U 1 1 61905E15
 P 6450 3650
-F 0 "J?" H 6530 3692 50  0000 L CNN
+F 0 "J2" H 6530 3692 50  0000 L CNN
 F 1 "Conn_01x05" H 6530 3601 50  0000 L CNN
-F 2 "" H 6450 3650 50  0001 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical" H 6450 3650 50  0001 C CNN
 F 3 "~" H 6450 3650 50  0001 C CNN
 	1    6450 3650
 	1    0    0    -1  
