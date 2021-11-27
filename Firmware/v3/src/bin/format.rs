@@ -1,8 +1,8 @@
 #![no_main]
 #![no_std]
 
-use rust_firmware_hello_world as _; // global logger + panicking-behavior + memory layout
-use defmt::Format; // <- derive attribute
+use defmt::Format;
+use nixie_clock as _; // global logger + panicking-behavior + memory layout // <- derive attribute
 
 #[derive(Format)]
 struct S1<T> {
@@ -25,5 +25,5 @@ fn main() -> ! {
     let x = 42;
     defmt::println!("x={=u8}", x);
 
-    rust_firmware_hello_world::exit()
+    nixie_clock::exit()
 }

@@ -1,7 +1,7 @@
 #![no_main]
 #![no_std]
 
-use rust_firmware_hello_world as _; // global logger + panicking-behavior + memory layout
+use nixie_clock as _; // global logger + panicking-behavior + memory layout
 
 #[cortex_m_rt::entry]
 fn main() -> ! {
@@ -13,5 +13,5 @@ fn main() -> ! {
     defmt::debug!("debug");
     defmt::error!("error");
 
-    rust_firmware_hello_world::exit()
+    nixie_clock::exit()
 }
