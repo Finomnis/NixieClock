@@ -1,0 +1,12 @@
+﻿"baseHeight"= 70mm
+"baseWidth"= 140mm
+"walls"= 2mm
+"pcbWidth"= 100mm
+"pcbHeight"= 40mm
+"pcbHeightClearance"= 0.5mm
+"nixieTubeDepth"= 9mm
+"caseHeight"= 50mm
+"pcbHoleEdgeDistance"= 3.2mm
+"pcbHoleDiameter"= 2.3mm
+"pcbHoleSupport"= 0.9mm
+"pcbWidthClearance"= 5.5mm
